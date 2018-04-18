@@ -11,34 +11,6 @@
 #include "SynthVoice.h"
 #include <string>
 
-/*
-    ==========================================================
-    ELEMENT BASED DESIGN PLAN:
-    
-    ## Hierarchy:
-    
-    CuttleElement -> Generator / Effect / Controller / Output
-    
-    Generator -> Oscillator, ...
-    Effect -> Flanger, Filter, ...
-    Controller -> LFO, ...
-    Output -> 1 instance of output element that is "last in the chain"
-    
-    ## Design
-    
-    - Maintain a list of: all elements, all generators
-    
-    startNote -> set triggers, levels, frequencies in generators.
-    stopNote -> set triggers in generators
-    renderNextBlock -> output.getSupplier().getSignal();
-    
-    getSignal() on an effect invokes getSignal on that effect's supplier
-    controllers and generators return the signal without needing a supplier (so they always start the chain)
-    
-    
-    ==========================================================
-*/
-
 bool SynthVoice::canPlaySound(SynthesiserSound * sound)
 {
 	// If we can cast the sound to our synthsound, we can play it.
