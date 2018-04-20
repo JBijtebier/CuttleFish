@@ -14,5 +14,6 @@
 class Generator : public CuttleElement {
   public:
   
-    virtual void setTriggers(int trigger) = 0;
+    virtual void startNote(double noteLevel, double noteFrequency) = 0;
+	virtual void releaseNote() = 0;
 };

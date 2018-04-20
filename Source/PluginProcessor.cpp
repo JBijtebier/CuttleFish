@@ -50,10 +50,12 @@ CuttleFishAudioProcessor::CuttleFishAudioProcessor()
 
 	cuttleSynth.clearVoices();
 
-	const int voices = 16;
+	const int voices = 32;
 
 	for (int i = 0; i < voices; i++) {
-		cuttleSynth.addVoice(new SynthVoice());
+		SynthVoice* voice = new SynthVoice();
+		voice->init();
+		cuttleSynth.addVoice(voice);
 	}
 
 	cuttleSynth.clearSounds();

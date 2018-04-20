@@ -12,9 +12,13 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSound.h"
 #include "maximilian.h"
+#include "Output.h"
+#include "Oscillator.h"
+#include <vector>
 
 class SynthVoice : public SynthesiserVoice {
 	public:
+		~SynthVoice();
 
 		bool canPlaySound(SynthesiserSound *sound) override;
 
@@ -30,7 +34,20 @@ class SynthVoice : public SynthesiserVoice {
 
 		void setParameter(juce::String name, float* value);
 
+		void init();
+
 	private:
+
+		/*
+			Cuttle Elements
+		*/
+
+		std::vector<Generator *> generators;
+		Output* output;
+
+		/*
+			Other Stuff
+		*/
 
 		double getWave();
 

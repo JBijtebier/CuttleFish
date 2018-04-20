@@ -11,6 +11,15 @@
 #include "SynthVoice.h"
 #include <string>
 
+SynthVoice::~SynthVoice()
+{
+	delete output;
+
+	for (int i = 0; i < generators.size(); i++) {
+		delete generators[i];
+	}
+}
+
 bool SynthVoice::canPlaySound(SynthesiserSound * sound)
 {
 	// If we can cast the sound to our synthsound, we can play it.
@@ -30,12 +39,20 @@ void SynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound 
 
 	// Set velocity (level)
 	level = velocity;
+	
+	for (int i = 0; i < generators.size(); i++) {
+		generators[i]->startNote(level, frequency);
+	}
 }
 
 void SynthVoice::stopNote(float velocity, bool allowTailoff)
 {
 	// Let the trigger know that we released the note
 	env1.trigger = 0;
+
+	for (int i = 0; i < generators.size(); i++) {
+		generators[i]->releaseNote();
+	}
 
 	// Reset the state of the voice (for reuse on a different keypress)
 	// Of course, only if we are not tailing off.
@@ -65,10 +82,12 @@ void SynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSamp
 	for (int sample = 0; sample < numSamples; sample++) {
 
 		// Create the (sine) wave
-		double wave = getWave();
+		double wave = output->getSignal();
+
+		// Logger::outputDebugString(juce::String(wave));
 
 		// Create a sound based on the wave and our envelope.
-		double sound = env1.adsr(wave, env1.trigger);
+		// double sound = env1.adsr(wave, env1.trigger);
 
 		// If our envelope amplitude is close enough to 0 (inaudible) and  we're in the release phase, our release has finished.
 		// That means we can clear the note.
@@ -79,7 +98,7 @@ void SynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSamp
 
 		// Iterate over channels and drop our sound sample in the output buffer
 		for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++) {
-			outputBuffer.addSample(channel, startSample, sound * masterVolume);
+			outputBuffer.addSample(channel, startSample, wave * masterVolume);
 		}
 
 		startSample++;
@@ -95,6 +114,14 @@ void SynthVoice::setParameter(juce::String name, float *value)
 	else if (name == "waveTable") {
 		waveTable = (double)(*value);
 	}
+}
+
+void SynthVoice::init()
+{
+	output = new Output();
+	Oscillator *osc = new Oscillator();
+	output->setSupplier(osc);
+	generators.push_back(osc);
 }
 
 double SynthVoice::getWave() {
