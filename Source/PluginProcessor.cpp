@@ -44,6 +44,14 @@ CuttleFishAudioProcessor::CuttleFishAudioProcessor()
 	// Add parameter
 	valueTreeState.createAndAddParameter("waveTable", "Wave Table", "Wave Table", WaveTableNRange, 0.0f, nullptr, nullptr);
 
+	//==============
+	// CUTOFF
+	//==============
+	// Create normalisable range
+	NormalisableRange<float> CutoffNRange(0.0, 1.0);
+	// Add parameter
+	valueTreeState.createAndAddParameter("cutoff", "Cutoff", "Cutoff", CutoffNRange, 0.0f, nullptr, nullptr);
+
 	//===============
 	// Synth & Voices
 	//===============
@@ -222,6 +230,7 @@ void CuttleFishAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
 			cuttleVoice->setParameter("masterVolume", valueTreeState.getRawParameterValue("masterVolume"));
 			cuttleVoice->setParameter("waveTable", valueTreeState.getRawParameterValue("waveTable"));
+			cuttleVoice->setParameter("cutoff", valueTreeState.getRawParameterValue("cutoff"));
 		}
 	}
 

@@ -14,6 +14,7 @@
 #include "maximilian.h"
 #include "Output.h"
 #include "Oscillator.h"
+#include "LowPassFilter.h"
 #include <vector>
 
 class SynthVoice : public SynthesiserVoice {
@@ -55,9 +56,17 @@ class SynthVoice : public SynthesiserVoice {
 		double masterVolume;
 		double waveTable;
 		double frequency;
+		double cutoff;
 
 		bool cleared;
 
 		maxiOsc osc1;
 		maxiEnv env1;
+
+		/*
+			To be removed
+		*/
+
+		Oscillator *osc;
+		LowPassFilter *filter;
 };

@@ -49,5 +49,19 @@ double Oscillator::getSignal() {
 }
 
 double Oscillator::getWave() {
-	return osc.sinewave(frequency);
+	// Sine -> Triangle
+	if (waveTable < 1.0f) {
+		double t = waveTable;
+		return ((1 - t) * osc.sinewave(frequency / 2) + t * osc.triangle(frequency / 2)) * level;
+	}
+	// Triangle -> Saw
+	else if (waveTable < 2.0f) {
+		double t = waveTable - 1.0f;
+		return ((1 - t) * osc.triangle(frequency / 2) + t * osc.saw(frequency / 2)) * level;
+	}
+	// Saw -> Square
+	else {
+		double t = waveTable - 2.0f;
+		return ((1 - t) * osc.saw(frequency / 2) + t * osc.square(frequency / 2)) * level;
+	}
 }

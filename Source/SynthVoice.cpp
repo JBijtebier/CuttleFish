@@ -113,36 +113,23 @@ void SynthVoice::setParameter(juce::String name, float *value)
 
 	else if (name == "waveTable") {
 		waveTable = (double)(*value);
+		osc->waveTable = waveTable;
+	}
+
+	else if (name == "cutoff") {
+		cutoff = (double)(*value);
+		filter->cutoff = cutoff;
 	}
 }
 
 void SynthVoice::init()
 {
 	output = new Output();
-	Oscillator *osc = new Oscillator();
-	output->setSupplier(osc);
+
+	osc = new Oscillator();
 	generators.push_back(osc);
-}
 
-double SynthVoice::getWave() {
-
-	/* Since we are executing two oscillator functions every time, the phase gets updated twice.
-	 * So we only use half the frequency, so that it updates once.
-	 */
-
-	// Sine -> Triangle
-	if (waveTable < 1.0f) {
-		double t = waveTable;
-		return ((1 - t) * osc1.sinewave(frequency / 2) + t * osc1.triangle(frequency / 2)) * level;
-	}
-	// Triangle -> Saw
-	else if (waveTable < 2.0f) {
-		double t = waveTable - 1.0f;
-		return ((1 - t) * osc1.triangle(frequency / 2) + t * osc1.saw(frequency / 2)) * level;
-	}
-	// Saw -> Square
-	else {
-		double t = waveTable - 2.0f;
-		return ((1 - t) * osc1.saw(frequency / 2) + t * osc1.square(frequency / 2)) * level;
-	}
+	filter = new LowPassFilter();
+	filter->setSupplier(osc);
+	output->setSupplier(filter);
 }

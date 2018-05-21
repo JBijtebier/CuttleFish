@@ -27,10 +27,12 @@ public:
 
 	double getWave();
 
-private:
-
+	double waveTable;
 	double level;
 	double frequency;
+
+private:
+
 	maxiOsc osc;
 	maxiEnv env;
 };

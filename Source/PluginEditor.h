@@ -41,5 +41,10 @@ private:
 	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> waveTableAttachment;
 	void addWaveTableSlider();
 
+	// Slider: Cutoff
+	Slider cutoffSlider;
+	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment;
+	void addCutoffSlider();
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuttleFishAudioProcessorEditor)
 };
