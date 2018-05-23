@@ -18,6 +18,7 @@ namespace CuttleFish {
 		Effect(int elementId);
 
 		void setSupplier(CuttleElement *newSupplier);
+		bool hasSupplier();
 
 	protected:
 		CuttleElement * supplier;

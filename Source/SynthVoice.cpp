@@ -88,7 +88,7 @@ void SynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSamp
 		// Create the (sine) wave
 		double wave = output->getSignal();
 
-		// Logger::outputDebugString(juce::String(wave));
+		// Logger::outputDebugString("Output: " + juce::String(wave));
 
 		// Create a sound based on the wave and our envelope.
 		// double sound = env1.adsr(wave, env1.trigger);
@@ -118,9 +118,9 @@ void SynthVoice::setParameter(juce::String name, float *value)
 
 void SynthVoice::init()
 {
-	/*
-	output = new Output();
+	output = new CuttleFish::Output(0);
 
+	/*
 	osc = new Oscillator();
 	generators.push_back(osc);
 
@@ -145,8 +145,8 @@ void SynthVoice::addCuttleElement(CuttleFish::CuttleElement *element)
 	}
 
 	// Element is an output
-	if (CuttleFish::Output *output = dynamic_cast<CuttleFish::Output*>(element)) {
-		setOutput(output);
+	if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(element)) {
+		setOutput(newOutput);
 		return;
 	}
 }
@@ -169,8 +169,8 @@ void SynthVoice::linkElements(int idFrom, int idTo)
 	}
 
 	// 'To' is an output
-	if (CuttleFish::Output *output = dynamic_cast<CuttleFish::Output*>(to)) {
-		output->setSupplier(from);
+	if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(to)) {
+		newOutput->setSupplier(from);
 		return;
 	}
 }
@@ -192,6 +192,10 @@ void SynthVoice::setOutput(CuttleFish::Output *outputElement)
 
 CuttleFish::CuttleElement * SynthVoice::getCuttleElement(int id)
 {
+	if (id == 0) {
+		return output;
+	}
+
 	for (int i = 0; i < generators.size(); i++) {
 		if (generators[i]->id == id) {
 			return generators[i];
@@ -204,6 +208,6 @@ CuttleFish::CuttleElement * SynthVoice::getCuttleElement(int id)
 		}
 	}
 
-	Logger::outputDebugString("getCuttleElement was not found for id: " + id);
+	Logger::outputDebugString("getCuttleElement was not found for id: " + juce::String(id));
 	return nullptr;
 }

@@ -22,6 +22,14 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	// Master Volume Slider
 	addMasterVolumeSlider();
 	masterVolumeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.valueTreeState, "masterVolume", masterVolumeSlider);
+
+	// ==========================================================
+	// CREATE CUTTLE ELEMENTS BY HAND ATM, DO IT IN UI LATER
+	// ==========================================================
+	addCuttleElement("Oscillator"); // id 1
+	addCuttleElement("Low Pass Filter"); // id 2
+	linkElements(1, 2); // OSC -> LPF
+	linkElements(2, 0); // LPF -> OUT
 }
 
 CuttleFishAudioProcessorEditor::~CuttleFishAudioProcessorEditor()

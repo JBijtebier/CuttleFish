@@ -16,7 +16,7 @@ LowPassFilter::LowPassFilter(int elementId)
 : Effect(elementId)
 {
 	filter = maxiFilter();
-	cutoff = 1;
+	cutoff = 0.1;
 }
 
 LowPassFilter::~LowPassFilter()
@@ -28,10 +28,14 @@ juce::String LowPassFilter::getName() {
 }
 
 double LowPassFilter::getSignal() {
+	// Check if supplier exists
+	if (!hasSupplier()) { return 0; }
+	// Continue if it does
+
 	double wave = supplier->getSignal();
 	return filter.lopass(wave, cutoff);
 }
 
-void CuttleFish::LowPassFilter::instantiateUI()
+void LowPassFilter::instantiateUI()
 {
 }

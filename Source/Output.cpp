@@ -15,6 +15,7 @@ using namespace CuttleFish;
 Output::Output(int elementId)
 : CuttleElement(elementId)
 {
+	supplier = nullptr;
 }
 
 Output::~Output()
@@ -26,13 +27,24 @@ juce::String Output::getName() {
 }
 
 double Output::getSignal() {
+	// Check if supplier exists
+	if (!hasSupplier()) { return 0; }
+	// Continue if it does
+
     return supplier->getSignal();
 }
 
-void CuttleFish::Output::instantiateUI()
+void Output::instantiateUI()
 {
 }
     
 void Output::setSupplier(CuttleElement *newSupplier) {
     supplier = newSupplier;
+
+	Logger::outputDebugString("SETTING SUPPLIER FOR OUTPUT: " + supplier->getName());
+}
+
+bool Output::hasSupplier()
+{
+	return (supplier != nullptr);
 }

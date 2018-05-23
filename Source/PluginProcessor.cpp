@@ -53,7 +53,8 @@ CuttleFishAudioProcessor::CuttleFishAudioProcessor()
 	cuttleSynth.clearSounds();
 	cuttleSynth.addSound(new SynthSound());
 
-	currentElementId = 0;
+	// Start at 1 because output is 0
+	currentElementId = 1;
 }
 
 CuttleFishAudioProcessor::~CuttleFishAudioProcessor()
@@ -273,7 +274,7 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 		return new CuttleFish::LowPassFilter(id);
 	}
 
-	Logger::outputDebugString("Could not create cuttle element because name was not found: " + elementName);
+	Logger::outputDebugString("Could not create cuttle element because name was not found: " + juce::String(elementName));
 	return nullptr;
 }
 

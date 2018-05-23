@@ -26,6 +26,8 @@ namespace CuttleFish {
 
 		void setSupplier(CuttleElement *newSupplier);
 
+		bool hasSupplier();
+
 	private:
 		CuttleElement * supplier;
 	};

@@ -17,6 +17,7 @@ Oscillator::Oscillator(int elementId)
 {
 	frequency = 0;
 	level = 0;
+	waveTable = 2;
 	env = maxiEnv();
 	osc = maxiOsc();
 }
@@ -45,14 +46,12 @@ double Oscillator::getSignal() {
 	env.setSustain(0.8);
 	env.setRelease(2000);
 
-	//Logger::outputDebugString(juce::String(frequency));
 	double wave = getWave() * level;
 
 	return env.adsr(wave, env.trigger);
-	//return getWave() * level;
 }
 
-void CuttleFish::Oscillator::instantiateUI()
+void Oscillator::instantiateUI()
 {
 }
 

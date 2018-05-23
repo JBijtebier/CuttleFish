@@ -15,8 +15,14 @@ using namespace CuttleFish;
 Effect::Effect(int elementId)
 : CuttleElement(elementId)
 {
+	supplier = nullptr;
 }
 
-  void Effect::setSupplier(CuttleElement *newSupplier) {
+void Effect::setSupplier(CuttleElement *newSupplier) {
 	supplier = newSupplier;
+}
+
+bool Effect::hasSupplier()
+{
+	return (supplier != nullptr);
 }
