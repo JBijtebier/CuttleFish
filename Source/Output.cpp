@@ -10,7 +10,10 @@
 
 #include "Output.h"
 
-Output::Output()
+using namespace CuttleFish;
+
+Output::Output(int elementId)
+: CuttleElement(elementId)
 {
 }
 

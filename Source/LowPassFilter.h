@@ -13,18 +13,22 @@
 #include "Effect.h"
 #include "maximilian.h"
 
-class LowPassFilter : public Effect {
-public:
-	LowPassFilter();
-	~LowPassFilter();
+namespace CuttleFish {
 
-	juce::String getName() override;
+	class LowPassFilter : public Effect {
+	public:
+		LowPassFilter(int elementId);
+		~LowPassFilter();
 
-	double getSignal() override;
+		juce::String getName() override;
 
-	double cutoff;
+		double getSignal() override;
 
-private:
+		double cutoff;
 
-	maxiFilter filter;
-};
+	private:
+
+		maxiFilter filter;
+	};
+
+}

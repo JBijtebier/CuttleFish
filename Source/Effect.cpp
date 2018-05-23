@@ -10,6 +10,13 @@
 
 #include "Effect.h"
 
-void Effect::setSupplier(CuttleElement *newSupplier) {
+using namespace CuttleFish;
+
+Effect::Effect(int elementId)
+: CuttleElement(elementId)
+{
+}
+
+  void Effect::setSupplier(CuttleElement *newSupplier) {
 	supplier = newSupplier;
 }

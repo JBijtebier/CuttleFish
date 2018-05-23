@@ -10,7 +10,11 @@
 
 #include "Oscillator.h"
 
-Oscillator::Oscillator() {
+using namespace CuttleFish;
+
+Oscillator::Oscillator(int elementId)
+: Generator(elementId)
+{
 	frequency = 0;
 	level = 0;
 	env = maxiEnv();

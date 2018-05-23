@@ -58,14 +58,25 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	//==============================================================================
-
 	AudioProcessorValueTreeState valueTreeState;
+
+	//==============================================================================
+	// CUTTLE ELEMENT - VOICES
+	//==============================================================================
+	CuttleFish::CuttleElement* createCuttleElement(string elementName, int id);
+	void addCuttleElement(string elementName);
+	void linkElements(int idFrom, int idTo);
 
 private:
 	Synthesiser cuttleSynth;
 	SynthVoice* cuttleVoice;
 
 	double lastSampleRate;
+
+	//==============================================================================
+	// CUTTLE ELEMENT - VOICES
+	//==============================================================================
+	int currentElementId;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuttleFishAudioProcessor)

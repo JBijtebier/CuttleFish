@@ -9,3 +9,10 @@
 */
 
 #include "Generator.h"
+
+using namespace CuttleFish;
+
+Generator::Generator(int elementId)
+: CuttleElement(elementId)
+{
+}

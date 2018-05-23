@@ -68,6 +68,8 @@ CuttleFishAudioProcessor::CuttleFishAudioProcessor()
 
 	cuttleSynth.clearSounds();
 	cuttleSynth.addSound(new SynthSound());
+
+	currentElementId = 0;
 }
 
 CuttleFishAudioProcessor::~CuttleFishAudioProcessor()
@@ -273,4 +275,48 @@ void CuttleFishAudioProcessor::setStateInformation (const void* data, int sizeIn
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new CuttleFishAudioProcessor();
+}
+
+CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string elementName, int id)
+{
+	if (elementName == "Output") {
+		return new CuttleFish::Output(id);
+	}
+
+	if (elementName == "Oscillator") {
+		return new CuttleFish::Oscillator(id);
+	}
+
+	if (elementName == "Low Pass Filter") {
+		return new CuttleFish::LowPassFilter(id);
+	}
+
+	Logger::outputDebugString("Could not create cuttle element because name was not found: " + elementName);
+	return nullptr;
+}
+
+void CuttleFishAudioProcessor::addCuttleElement(string elementName)
+{
+	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {
+
+		// Single = on purpose! Just a check to see if we can actually assign the voice to the correct type
+		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
+			CuttleFish::CuttleElement *element = createCuttleElement(elementName, currentElementId);
+
+			cuttleVoice->addCuttleElement(element);
+		}
+	}
+
+	currentElementId++;
+}
+
+void CuttleFishAudioProcessor::linkElements(int idFrom, int idTo)
+{
+	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {
+
+		// Single = on purpose! Just a check to see if we can actually assign the voice to the correct type
+		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
+			cuttleVoice->linkElements(idFrom, idTo);
+		}
+	}
 }

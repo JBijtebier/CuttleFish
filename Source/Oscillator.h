@@ -12,27 +12,32 @@
 #include "Generator.h"
 #include "maximilian.h"
 
-class Oscillator : public Generator {
-public:
-	Oscillator();
-	~Oscillator();
+namespace CuttleFish {
 
-	void startNote(double noteLevel, double noteFrequency) override;
+	class Oscillator : public Generator {
+	public:
+		Oscillator(int elementId);
+		~Oscillator();
 
-	void releaseNote() override;
+		void startNote(double noteLevel, double noteFrequency) override;
 
-	juce::String getName() override;
+		void releaseNote() override;
 
-	double getSignal() override;
+		juce::String getName() override;
 
-	double getWave();
+		double getSignal() override;
 
-	double waveTable;
-	double level;
-	double frequency;
+		double getWave();
 
-private:
+		double waveTable;
+		double level;
+		double frequency;
 
-	maxiOsc osc;
-	maxiEnv env;
-};
+	private:
+
+		maxiOsc osc;
+		maxiEnv env;
+	};
+
+}
+

@@ -12,10 +12,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "CuttleElement.h"
 
 //==============================================================================
-/**
-*/
 class CuttleFishAudioProcessorEditor  : public AudioProcessorEditor									
 {
 public:
@@ -45,6 +44,12 @@ private:
 	Slider cutoffSlider;
 	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment;
 	void addCutoffSlider();
+
+	//==============================================================================
+	// Cuttle Elements
+	//==============================================================================
+	void addCuttleElement(string elementName);
+	void linkElements(int idFrom, int idTo);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuttleFishAudioProcessorEditor)
 };

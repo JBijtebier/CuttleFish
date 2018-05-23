@@ -106,3 +106,13 @@ void CuttleFishAudioProcessorEditor::addCutoffSlider()
 	// Actually add it
 	addAndMakeVisible(&cutoffSlider);
 }
+
+void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
+{
+	processor.addCuttleElement(elementName);
+}
+
+void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
+{
+	processor.linkElements(idFrom, idTo);
+}

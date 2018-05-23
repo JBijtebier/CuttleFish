@@ -11,13 +11,31 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class CuttleElement {
-  public:
-  
-    virtual juce::String getName() = 0;
-    
-    virtual double getSignal() = 0;
-};
+namespace CuttleFish {
+
+	class CuttleElement {
+	public:
+
+		CuttleElement(int elementId);
+
+		virtual juce::String getName() = 0;
+
+		virtual double getSignal() = 0;
+
+		virtual void instantiateUI() = 0;
+
+		void setPosition(float x, float y);
+
+		void setPosition(Point<float> pos);
+
+		int id;
+
+	private:
+
+		Point<float> position;
+	};
+
+}
 
 /*
     ==========================================================

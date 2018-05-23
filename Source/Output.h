@@ -11,17 +11,21 @@
 #pragma once
 #include "CuttleElement.h"
 
-class Output : public CuttleElement {
-  public:
-    Output();
-    ~Output();
+namespace CuttleFish {
 
-    juce::String getName() override;
-    
-    double getSignal() override;
-    
-    void setSupplier(CuttleElement *newSupplier);
-    
-  private:
-    CuttleElement *supplier;
-};
+	class Output : public CuttleElement {
+	public:
+		Output(int elementId);
+		~Output();
+
+		juce::String getName() override;
+
+		double getSignal() override;
+
+		void setSupplier(CuttleElement *newSupplier);
+
+	private:
+		CuttleElement * supplier;
+	};
+
+}

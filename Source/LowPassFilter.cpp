@@ -10,7 +10,11 @@
 
 #include "LowPassFilter.h"
 
-LowPassFilter::LowPassFilter() {
+using namespace CuttleFish;
+
+LowPassFilter::LowPassFilter(int elementId)
+: Effect(elementId)
+{
 	filter = maxiFilter();
 	cutoff = 1;
 }

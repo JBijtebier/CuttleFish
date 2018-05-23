@@ -11,10 +11,17 @@
 #pragma once
 #include "CuttleElement.h"
 
-class Effect : public CuttleElement {
-public:
-	void setSupplier(CuttleElement *newSupplier);
+namespace CuttleFish {
 
-protected:
-	CuttleElement *supplier;
-};
+	class Effect : public CuttleElement {
+	public:
+		Effect(int elementId);
+
+		void setSupplier(CuttleElement *newSupplier);
+
+	protected:
+		CuttleElement * supplier;
+	};
+
+}
+

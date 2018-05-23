@@ -18,6 +18,10 @@ SynthVoice::~SynthVoice()
 	for (int i = 0; i < generators.size(); i++) {
 		delete generators[i];
 	}
+
+	for (int i = 0; i < effects.size(); i++) {
+		delete effects[i];
+	}
 }
 
 bool SynthVoice::canPlaySound(SynthesiserSound * sound)
@@ -124,6 +128,7 @@ void SynthVoice::setParameter(juce::String name, float *value)
 
 void SynthVoice::init()
 {
+	/*
 	output = new Output();
 
 	osc = new Oscillator();
@@ -132,4 +137,83 @@ void SynthVoice::init()
 	filter = new LowPassFilter();
 	filter->setSupplier(osc);
 	output->setSupplier(filter);
+	*/
+}
+
+void SynthVoice::addCuttleElement(CuttleFish::CuttleElement *element)
+{
+	// Element is a generator
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(element)) {
+		addGenerator(generator);
+		return;
+	}
+
+	// Element is an effect
+	if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(element)) {
+		addEffect(effect);
+		return;
+	}
+
+	// Element is an output
+	if (CuttleFish::Output *output = dynamic_cast<CuttleFish::Output*>(element)) {
+		setOutput(output);
+		return;
+	}
+}
+
+void SynthVoice::linkElements(int idFrom, int idTo)
+{
+	CuttleFish::CuttleElement *from = getCuttleElement(idFrom);
+	CuttleFish::CuttleElement *to = getCuttleElement(idTo);
+
+	// 'To' is a generator
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(to)) {
+		Logger::outputDebugString("Can't link TO a generator. Can only link FROM an output/generator/effect TO an output/effect.");
+		return;
+	}
+
+	// 'To' is an effect
+	if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(to)) {
+		effect->setSupplier(from);
+		return;
+	}
+
+	// 'To' is an output
+	if (CuttleFish::Output *output = dynamic_cast<CuttleFish::Output*>(to)) {
+		output->setSupplier(from);
+		return;
+	}
+}
+
+void SynthVoice::addGenerator(CuttleFish::Generator *generator)
+{
+	generators.push_back(generator);
+}
+
+void SynthVoice::addEffect(CuttleFish::Effect *effect)
+{
+	effects.push_back(effect);
+}
+
+void SynthVoice::setOutput(CuttleFish::Output *outputElement)
+{
+	output = outputElement;
+}
+
+CuttleFish::CuttleElement * SynthVoice::getCuttleElement(int id)
+{
+	for (int i = 0; i < generators.size(); i++) {
+		if (generators[i]->id == id) {
+			return generators[i];
+		}
+	}
+
+	for (int i = 0; i < effects.size(); i++) {
+		if (effects[i]->id == id) {
+			return effects[i];
+		}
+	}
+
+	Logger::outputDebugString("getCuttleElement was not found for id: " + id);
+	return nullptr;
 }

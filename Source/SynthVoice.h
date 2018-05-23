@@ -37,20 +37,23 @@ class SynthVoice : public SynthesiserVoice {
 
 		void init();
 
+		void addCuttleElement(CuttleFish::CuttleElement *element);
+
+		void linkElements(int idFrom, int idTo);
+
 	private:
 
 		/*
 			Cuttle Elements
 		*/
 
-		std::vector<Generator *> generators;
-		Output* output;
+		std::vector<CuttleFish::Generator *> generators;
+		std::vector<CuttleFish::Effect *> effects;
+		CuttleFish::Output* output;
 
 		/*
 			Other Stuff
 		*/
-
-		double getWave();
 
 		double level;
 		double masterVolume;
@@ -67,6 +70,17 @@ class SynthVoice : public SynthesiserVoice {
 			To be removed
 		*/
 
-		Oscillator *osc;
-		LowPassFilter *filter;
+		CuttleFish::Oscillator *osc;
+		CuttleFish::LowPassFilter *filter;
+
+		//==============================================================================
+		// CUTTLE ELEMENT - VOICES
+		//==============================================================================
+		void addGenerator(CuttleFish::Generator *generator);
+
+		void addEffect(CuttleFish::Effect *effect);
+
+		void setOutput(CuttleFish::Output *outputElement);
+
+		CuttleFish::CuttleElement* getCuttleElement(int id);
 };

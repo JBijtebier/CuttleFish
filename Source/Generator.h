@@ -11,9 +11,15 @@
 #pragma once
 #include "CuttleElement.h"
 
-class Generator : public CuttleElement {
-  public:
-  
-    virtual void startNote(double noteLevel, double noteFrequency) = 0;
-	virtual void releaseNote() = 0;
-};
+namespace CuttleFish {
+
+	class Generator : public CuttleElement {
+	public:
+		Generator(int elementId);
+
+		virtual void startNote(double noteLevel, double noteFrequency) = 0;
+		virtual void releaseNote() = 0;
+	};
+
+}
+
