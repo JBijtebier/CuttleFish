@@ -28,6 +28,10 @@ juce::String Output::getName() {
 double Output::getSignal() {
     return supplier->getSignal();
 }
+
+void CuttleFish::Output::instantiateUI()
+{
+}
     
 void Output::setSupplier(CuttleElement *newSupplier) {
     supplier = newSupplier;

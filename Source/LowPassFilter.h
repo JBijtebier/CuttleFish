@@ -24,6 +24,8 @@ namespace CuttleFish {
 
 		double getSignal() override;
 
+		void instantiateUI() override;
+
 		double cutoff;
 
 	private:

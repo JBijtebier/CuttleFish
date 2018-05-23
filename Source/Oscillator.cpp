@@ -52,6 +52,10 @@ double Oscillator::getSignal() {
 	//return getWave() * level;
 }
 
+void CuttleFish::Oscillator::instantiateUI()
+{
+}
+
 double Oscillator::getWave() {
 	// Sine -> Triangle
 	if (waveTable < 1.0f) {

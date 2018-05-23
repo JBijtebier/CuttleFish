@@ -36,22 +36,6 @@ CuttleFishAudioProcessor::CuttleFishAudioProcessor()
 	// Add parameter
 	valueTreeState.createAndAddParameter("masterVolume", "Master Volume", "Master Volume", masterVolumeNRange, 0.8f, nullptr, nullptr);
 
-	//==============
-	// WAVE TABLE
-	//==============
-	// Create normalisable range
-	NormalisableRange<float> WaveTableNRange(0.0, 3.0);
-	// Add parameter
-	valueTreeState.createAndAddParameter("waveTable", "Wave Table", "Wave Table", WaveTableNRange, 0.0f, nullptr, nullptr);
-
-	//==============
-	// CUTOFF
-	//==============
-	// Create normalisable range
-	NormalisableRange<float> CutoffNRange(0.0, 1.0);
-	// Add parameter
-	valueTreeState.createAndAddParameter("cutoff", "Cutoff", "Cutoff", CutoffNRange, 0.0f, nullptr, nullptr);
-
 	//===============
 	// Synth & Voices
 	//===============
@@ -231,8 +215,6 @@ void CuttleFishAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 		// Single = on purpose! Just a check to see if we can actually assign the voice to the correct type
 		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
 			cuttleVoice->setParameter("masterVolume", valueTreeState.getRawParameterValue("masterVolume"));
-			cuttleVoice->setParameter("waveTable", valueTreeState.getRawParameterValue("waveTable"));
-			cuttleVoice->setParameter("cutoff", valueTreeState.getRawParameterValue("cutoff"));
 		}
 	}
 

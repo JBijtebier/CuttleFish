@@ -22,6 +22,8 @@ namespace CuttleFish {
 
 		double getSignal() override;
 
+		void instantiateUI() override;
+
 		void setSupplier(CuttleElement *newSupplier);
 
 	private:

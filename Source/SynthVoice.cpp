@@ -114,16 +114,6 @@ void SynthVoice::setParameter(juce::String name, float *value)
 	if (name == "masterVolume") {
 		masterVolume = (double)(*value);
 	}
-
-	else if (name == "waveTable") {
-		waveTable = (double)(*value);
-		osc->waveTable = waveTable;
-	}
-
-	else if (name == "cutoff") {
-		cutoff = (double)(*value);
-		filter->cutoff = cutoff;
-	}
 }
 
 void SynthVoice::init()

@@ -35,16 +35,6 @@ private:
 	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> masterVolumeAttachment;
 	void addMasterVolumeSlider();
 
-	// Slider: Wavetable
-	Slider waveTableSlider;
-	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> waveTableAttachment;
-	void addWaveTableSlider();
-
-	// Slider: Cutoff
-	Slider cutoffSlider;
-	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> cutoffAttachment;
-	void addCutoffSlider();
-
 	//==============================================================================
 	// Cuttle Elements
 	//==============================================================================

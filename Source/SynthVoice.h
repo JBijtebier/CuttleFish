@@ -57,9 +57,7 @@ class SynthVoice : public SynthesiserVoice {
 
 		double level;
 		double masterVolume;
-		double waveTable;
 		double frequency;
-		double cutoff;
 
 		bool cleared;
 
