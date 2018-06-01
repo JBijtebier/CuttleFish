@@ -18,6 +18,10 @@ HUD_Oscillator::HUD_Oscillator(AudioProcessorEditor *e)
 	setSize(200, 230);
 }
 
+CuttleFish::HUD_Oscillator::~HUD_Oscillator()
+{
+}
+
 void CuttleFish::HUD_Oscillator::instantiateControls()
 {
 	// -------------
@@ -32,10 +36,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	waveTableSlider.setValue(0.0);
 	// Actually add it
 	editor->addAndMakeVisible(&waveTableSlider);
-	// Sizing
-	waveTableSlider.setBounds(transform.getX() + 40, transform.getY() + 45, 120, 120);
 	// Label
-	waveTableLabel.setBounds(transform.getX() + 40, transform.getY() + 35, 120, 15);
 	waveTableLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	waveTableLabel.setJustificationType(Justification::centred);
 	waveTableLabel.setFont(Font(12, Font::bold));
@@ -54,10 +55,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envASlider.setValue(25);
 	// Actually add it
 	editor->addAndMakeVisible(&envASlider);
-	// Sizing
-	envASlider.setBounds(transform.getX() + 0, transform.getY() + 180, 50, 50);
 	// Label
-	envALabel.setBounds(transform.getX() + 0, transform.getY() + 170, 50, 15);
 	envALabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envALabel.setJustificationType(Justification::centred);
 	envALabel.setFont(Font(12, Font::bold));
@@ -76,10 +74,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envDSlider.setValue(10);
 	// Actually add it
 	editor->addAndMakeVisible(&envDSlider);
-	// Sizing
-	envDSlider.setBounds(transform.getX() + 50, transform.getY() + 180, 50, 50);
 	// Label
-	envDLabel.setBounds(transform.getX() + 50, transform.getY() + 170, 50, 15);
 	envDLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envDLabel.setJustificationType(Justification::centred);
 	envDLabel.setFont(Font(12, Font::bold));
@@ -98,10 +93,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envSSlider.setValue(0.75);
 	// Actually add it
 	editor->addAndMakeVisible(&envSSlider);
-	// Sizing
-	envSSlider.setBounds(transform.getX() + 100, transform.getY() + 180, 50, 50);
 	// Label
-	envSLabel.setBounds(transform.getX() + 100, transform.getY() + 170, 50, 15);
 	envSLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envSLabel.setJustificationType(Justification::centred);
 	envSLabel.setFont(Font(12, Font::bold));
@@ -120,15 +112,35 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envRSlider.setValue(50);
 	// Actually add it
 	editor->addAndMakeVisible(&envRSlider);
-	// Sizing
-	envRSlider.setBounds(transform.getX() + 150, transform.getY() + 180, 50, 50);
 	// Label
-	envRLabel.setBounds(transform.getX() + 150, transform.getY() + 170, 50, 15);
 	envRLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envRLabel.setJustificationType(Justification::centred);
 	envRLabel.setFont(Font(12, Font::bold));
 	envRLabel.setText("R", NotificationType::dontSendNotification);
 	editor->addAndMakeVisible(&envRLabel);
+}
+
+void CuttleFish::HUD_Oscillator::setControlBounds()
+{
+	// WaveTable
+	waveTableSlider.setBounds(transform.getX() + 40, transform.getY() + 45, 120, 120);
+	waveTableLabel.setBounds(transform.getX() + 40, transform.getY() + 35, 120, 15);
+
+	// Env A
+	envASlider.setBounds(transform.getX() + 0, transform.getY() + 180, 50, 50);
+	envALabel.setBounds(transform.getX() + 0, transform.getY() + 170, 50, 15);
+
+	// Env D
+	envDSlider.setBounds(transform.getX() + 50, transform.getY() + 180, 50, 50);
+	envDLabel.setBounds(transform.getX() + 50, transform.getY() + 170, 50, 15);
+
+	// Env S
+	envSSlider.setBounds(transform.getX() + 100, transform.getY() + 180, 50, 50);
+	envSLabel.setBounds(transform.getX() + 100, transform.getY() + 170, 50, 15);
+
+	// Env R
+	envRSlider.setBounds(transform.getX() + 150, transform.getY() + 180, 50, 50);
+	envRLabel.setBounds(transform.getX() + 150, transform.getY() + 170, 50, 15);
 }
 
 double CuttleFish::HUD_Oscillator::getWaveTable()

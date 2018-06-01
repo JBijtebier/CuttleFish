@@ -16,12 +16,10 @@ namespace CuttleFish {
 
 	class CuttleElement;
 
-	class HUDElement {
+	class HUDElement : MouseListener {
 	public:
 		HUDElement(AudioProcessorEditor *e);
 		~HUDElement();
-
-		void instantiateUI();
 
 		void setPosition(int x, int y);
 
@@ -31,17 +29,31 @@ namespace CuttleFish {
 
 		void addCuttleElement(CuttleElement *elem);
 
+		// Instantiation
+		void instantiateUI();
+		void instantiateFrame();
 		virtual void instantiateControls() = 0;
 
-		void instantiateFrame();
+		// Bounds
+		void setBounds();	
+		void setFrameBounds();
+		virtual void setControlBounds() = 0;
+
+		// Mouse Listener
+		void mouseDrag(const MouseEvent &event) override;
+		void mouseDown(const MouseEvent &event) override;
 
 	protected:
+		bool positionIsLegal(juce::Rectangle<int> pos);
+
 		juce::Rectangle<int> transform;
 		std::vector<CuttleElement *> cuttleElements;
 		AudioProcessorEditor *editor;
+		Point<int> dragStart;
 
 		Label title;
 		Label frame;
+		TextButton moveButton;
 	};
 
 }

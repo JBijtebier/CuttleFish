@@ -18,8 +18,10 @@ namespace CuttleFish {
 	class HUD_Oscillator : public HUDElement {
 	public:
 		HUD_Oscillator(AudioProcessorEditor *e);
+		~HUD_Oscillator();
 		
 		void instantiateControls() override;
+		void setControlBounds() override;
 
 		double getWaveTable();
 		double getEnvA();

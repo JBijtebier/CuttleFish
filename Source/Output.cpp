@@ -36,8 +36,6 @@ double Output::getSignal() {
     
 void Output::setSupplier(CuttleElement *newSupplier) {
     supplier = newSupplier;
-
-	Logger::outputDebugString("SETTING SUPPLIER FOR OUTPUT: " + supplier->getName());
 }
 
 bool Output::hasSupplier()

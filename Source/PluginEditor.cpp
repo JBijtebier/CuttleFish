@@ -17,7 +17,7 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
     // editor's size to whatever you need it to be.
 
 	// Set plugin size
-    setSize (800, 450);
+    setSize (1280, 720);
 
 	// Master Volume Slider
 	addMasterVolumeSlider();
