@@ -48,7 +48,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	// -------------
 	// Params
 	envASlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	envASlider.setRange(10, 5000, 1);
+	envASlider.setRange(10, 3000, 1);
 	envASlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	envASlider.setPopupDisplayEnabled(true, true, editor);
 	envASlider.setTextValueSuffix(" msec Attack");
@@ -67,11 +67,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	// -------------
 	// Params
 	envDSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	envDSlider.setRange(10, 5000, 1);
+	envDSlider.setRange(10, 3000, 1);
 	envDSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	envDSlider.setPopupDisplayEnabled(true, true, editor);
 	envDSlider.setTextValueSuffix(" msec Decay");
-	envDSlider.setValue(10);
+	envDSlider.setValue(500);
 	// Actually add it
 	editor->addAndMakeVisible(&envDSlider);
 	// Label
@@ -105,7 +105,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	// -------------
 	// Params
 	envRSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	envRSlider.setRange(10, 5000, 1);
+	envRSlider.setRange(10, 3000, 1);
 	envRSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	envRSlider.setPopupDisplayEnabled(true, true, editor);
 	envRSlider.setTextValueSuffix(" msec Release");
