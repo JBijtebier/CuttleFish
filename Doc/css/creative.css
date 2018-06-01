@@ -59,7 +59,7 @@ section {
   margin-top: 0; }
 
 .lightText {
-  color: #f7f7f7; 
+  color: #f7f7f7;
 }
 
 ::-moz-selection {
@@ -299,4 +299,11 @@ header.masthead {
 .EXPLANATION a {
   color: rgb(200, 180, 255);
   font-weight: bold;
+}
+
+.elementImage {
+  margin: 1em;
+  border-radius: 5px;
+  border: 1px solid rgb(38, 50, 56);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 }
