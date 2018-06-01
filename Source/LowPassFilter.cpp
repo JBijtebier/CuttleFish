@@ -35,7 +35,3 @@ double LowPassFilter::getSignal() {
 	double wave = supplier->getSignal();
 	return filter.lopass(wave, cutoff);
 }
-
-void LowPassFilter::instantiateUI()
-{
-}

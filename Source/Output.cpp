@@ -33,10 +33,6 @@ double Output::getSignal() {
 
     return supplier->getSignal();
 }
-
-void Output::instantiateUI()
-{
-}
     
 void Output::setSupplier(CuttleElement *newSupplier) {
     supplier = newSupplier;

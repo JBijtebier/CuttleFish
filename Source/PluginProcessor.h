@@ -64,7 +64,8 @@ public:
 	// CUTTLE ELEMENT - VOICES
 	//==============================================================================
 	CuttleFish::CuttleElement* createCuttleElement(string elementName, int id);
-	void addCuttleElement(string elementName);
+	CuttleFish::HUDElement* createHUDElement(string elementName, AudioProcessorEditor *editor);
+	void addCuttleElement(string elementName, AudioProcessorEditor *editor);
 	void linkElements(int idFrom, int idTo);
 
 private:

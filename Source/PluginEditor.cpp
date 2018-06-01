@@ -27,9 +27,7 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	// CREATE CUTTLE ELEMENTS BY HAND ATM, DO IT IN UI LATER
 	// ==========================================================
 	addCuttleElement("Oscillator"); // id 1
-	addCuttleElement("Low Pass Filter"); // id 2
-	linkElements(1, 2); // OSC -> LPF
-	linkElements(2, 0); // LPF -> OUT
+	linkElements(1, 0); // LPF -> OUT
 }
 
 CuttleFishAudioProcessorEditor::~CuttleFishAudioProcessorEditor()
@@ -52,7 +50,7 @@ void CuttleFishAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
 
-	masterVolumeSlider.setBounds(40, 30, 20, getHeight() - 60);
+	masterVolumeSlider.setBounds(20, 20, 20, getHeight() - 40);
 }
 
 void CuttleFishAudioProcessorEditor::addMasterVolumeSlider()
@@ -71,7 +69,7 @@ void CuttleFishAudioProcessorEditor::addMasterVolumeSlider()
 
 void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
 {
-	processor.addCuttleElement(elementName);
+	processor.addCuttleElement(elementName, this);
 }
 
 void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)

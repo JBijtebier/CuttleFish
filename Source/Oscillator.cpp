@@ -9,6 +9,7 @@
 */
 
 #include "Oscillator.h"
+#include "HUD_Oscillator.h"
 
 using namespace CuttleFish;
 
@@ -41,21 +42,19 @@ juce::String Oscillator::getName() {
 }
 
 double Oscillator::getSignal() {
-	env.setAttack(20);
-	env.setDecay(500);
-	env.setSustain(0.8);
-	env.setRelease(2000);
+	env.setAttack(((HUD_Oscillator*)hudelement)->getEnvA());
+	env.setDecay(((HUD_Oscillator*)hudelement)->getEnvD());
+	env.setSustain(((HUD_Oscillator*)hudelement)->getEnvS());
+	env.setRelease(((HUD_Oscillator*)hudelement)->getEnvR());
 
 	double wave = getWave() * level;
 
 	return env.adsr(wave, env.trigger);
 }
 
-void Oscillator::instantiateUI()
-{
-}
-
 double Oscillator::getWave() {
+	waveTable = ((HUD_Oscillator*)hudelement)->getWaveTable();
+
 	// Sine -> Triangle
 	if (waveTable < 1.0f) {
 		double t = waveTable;

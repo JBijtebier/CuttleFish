@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "HUD_Oscillator.h"
 
 //==============================================================================
 CuttleFishAudioProcessor::CuttleFishAudioProcessor()
@@ -278,17 +279,48 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 	return nullptr;
 }
 
-void CuttleFishAudioProcessor::addCuttleElement(string elementName)
+CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string elementName, AudioProcessorEditor *editor)
 {
+	if (elementName == "Output") {
+		// TODO
+		return nullptr;
+	}
+
+	if (elementName == "Oscillator") {
+		return new CuttleFish::HUD_Oscillator(editor);
+	}
+
+	if (elementName == "Low Pass Filter") {
+		// TODO
+		return nullptr;
+	}
+
+	Logger::outputDebugString("Could not create HUD element because name was not found: " + juce::String(elementName));
+	return nullptr;
+}
+
+void CuttleFishAudioProcessor::addCuttleElement(string elementName, AudioProcessorEditor *editor)
+{
+	// Create the HUD element
+	CuttleFish::HUDElement *hud = createHUDElement(elementName, editor);
+
 	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {
 
 		// Single = on purpose! Just a check to see if we can actually assign the voice to the correct type
 		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
+			// Create the element
 			CuttleFish::CuttleElement *element = createCuttleElement(elementName, currentElementId);
 
+			// Add the element to the voice
 			cuttleVoice->addCuttleElement(element);
+
+			// Link CuttleElement and HUDElement
+			element->setHUDElement(hud);
+			hud->addCuttleElement(element);
 		}
 	}
+
+	hud->instantiateUI();
 
 	currentElementId++;
 }

@@ -17,11 +17,7 @@ CuttleElement::CuttleElement(int elementId)
 	id = elementId;
 }
 
-  void CuttleElement::setPosition(float x, float y) {
-	position.x = x;
-	position.y = y;
-}
-
-void CuttleElement::setPosition(Point<float> pos) {
-	position = pos;
+void CuttleFish::CuttleElement::setHUDElement(HUDElement * elem)
+{
+	hudelement = elem;
 }
