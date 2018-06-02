@@ -15,7 +15,7 @@
 #include "CuttleElement.h"
 
 //==============================================================================
-class CuttleFishAudioProcessorEditor  : public AudioProcessorEditor									
+class CuttleFishAudioProcessorEditor  : public AudioProcessorEditor, public Button::Listener									
 {
 public:
     CuttleFishAudioProcessorEditor (CuttleFishAudioProcessor&);
@@ -34,6 +34,17 @@ private:
 	Slider masterVolumeSlider;
 	ScopedPointer <AudioProcessorValueTreeState::SliderAttachment> masterVolumeAttachment;
 	void addMasterVolumeSlider();
+
+	// New Element
+	ComboBox elementBox;
+	TextButton newElement;
+	void addElementBox();
+	void buttonClicked(Button* btn) override;
+
+	// Frames
+	Label topFrame;
+	Label masterVolumeFrame;
+	void addFrames();
 
 	//==============================================================================
 	// Cuttle Elements

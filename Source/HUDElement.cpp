@@ -10,13 +10,16 @@
 
 #include "HUDElement.h"
 #include "CuttleElement.h"
+#include "Generator.h"
+#include "Output.h"
+#include "Effect.h"
 
 using namespace CuttleFish;
 
 HUDElement::HUDElement(AudioProcessorEditor *e)
 {
 	editor = e;
-	setPosition(50, 50);
+	setPosition(100, 100);
 }
 
 HUDElement::~HUDElement()
@@ -97,7 +100,7 @@ bool CuttleFish::HUDElement::positionIsLegal(juce::Rectangle<int> pos)
 	}
 
 	// Top border
-	if (pos.getY() < 0) {
+	if (pos.getY() < 45) {
 		return false;
 	}
 
@@ -109,30 +112,50 @@ bool CuttleFish::HUDElement::positionIsLegal(juce::Rectangle<int> pos)
 	return true;
 }
 
+void CuttleFish::HUDElement::setSliderColours(Slider * slider)
+{
+	slider->setColour(Slider::thumbColourId, Colour(168, 231, 255));
+}
+
 void CuttleFish::HUDElement::instantiateFrame()
 {
 	// --------------
-	// Title
-	// --------------
-	title.setColour(Label::ColourIds::textColourId, Colour(225, 225, 225));
-	title.setColour(Label::ColourIds::backgroundColourId, Colour(38, 50, 56));
-	title.setJustificationType(Justification::centred);
-	title.setFont(Font(20, Font::bold));
-	title.setText(cuttleElements[0]->getName(), juce::NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&title);
-
-	// --------------
 	// Frame
 	// --------------
-	frame.setColour(Label::ColourIds::outlineColourId, Colour(38, 50, 56));
+	frame.setColour(Label::ColourIds::outlineColourId, Colour(29, 33, 37));
+	frame.setColour(Label::ColourIds::backgroundColourId, Colour(247, 247, 247));
 	frame.setText("", NotificationType::dontSendNotification);
 	editor->addAndMakeVisible(&frame);
 
 	// --------------
+	// Title
+	// --------------
+	// generator color
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(cuttleElements[0])) {
+		title.setColour(Label::ColourIds::textColourId, Colour(171, 255, 176));
+	}
+
+	// effect color
+	else if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(cuttleElements[0])) {
+		title.setColour(Label::ColourIds::textColourId, Colour(168, 231, 255));
+	}
+
+	// output color
+	else if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(cuttleElements[0])) {
+		title.setColour(Label::ColourIds::textColourId, Colour(200, 180, 255));
+	}
+
+	title.setColour(Label::ColourIds::backgroundColourId, Colour(29, 33, 37));
+	title.setJustificationType(Justification::centred);
+	title.setFont(Font(16, Font::bold));
+	title.setText(cuttleElements[0]->getName().toUpperCase(), juce::NotificationType::dontSendNotification);
+	editor->addAndMakeVisible(&title);
+
+	// --------------
 	// Move Button
 	// --------------
-	moveButton.setColour(TextButton::ColourIds::textColourOffId, Colour(225, 225, 225));
-	moveButton.setColour(TextButton::ColourIds::buttonColourId, Colour(38, 50, 56));
+	moveButton.setColour(TextButton::ColourIds::textColourOffId, Colour(230, 230, 230));
+	moveButton.setColour(TextButton::ColourIds::buttonColourId, Colour(29, 33, 37));
 	moveButton.setButtonText("M");
 	moveButton.setName("MoveButton");
 	moveButton.addMouseListener(this, false);

@@ -45,6 +45,7 @@ namespace CuttleFish {
 
 	protected:
 		bool positionIsLegal(juce::Rectangle<int> pos);
+		void setSliderColours(Slider* slider);
 
 		juce::Rectangle<int> transform;
 		std::vector<CuttleElement *> cuttleElements;

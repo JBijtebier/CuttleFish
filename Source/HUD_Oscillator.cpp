@@ -34,6 +34,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	waveTableSlider.setPopupDisplayEnabled(true, true, editor);
 	waveTableSlider.setTextValueSuffix(" Wave Table");
 	waveTableSlider.setValue(0.0);
+	setSliderColours(&waveTableSlider);
 	// Actually add it
 	editor->addAndMakeVisible(&waveTableSlider);
 	// Label
@@ -53,6 +54,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envASlider.setPopupDisplayEnabled(true, true, editor);
 	envASlider.setTextValueSuffix(" msec Attack");
 	envASlider.setValue(25);
+	setSliderColours(&envASlider);
 	// Actually add it
 	editor->addAndMakeVisible(&envASlider);
 	// Label
@@ -72,6 +74,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envDSlider.setPopupDisplayEnabled(true, true, editor);
 	envDSlider.setTextValueSuffix(" msec Decay");
 	envDSlider.setValue(500);
+	setSliderColours(&envDSlider);
 	// Actually add it
 	editor->addAndMakeVisible(&envDSlider);
 	// Label
@@ -91,6 +94,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envSSlider.setPopupDisplayEnabled(true, true, editor);
 	envSSlider.setTextValueSuffix(" Amp Sustain");
 	envSSlider.setValue(0.75);
+	setSliderColours(&envSSlider);
 	// Actually add it
 	editor->addAndMakeVisible(&envSSlider);
 	// Label
@@ -110,6 +114,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envRSlider.setPopupDisplayEnabled(true, true, editor);
 	envRSlider.setTextValueSuffix(" msec Release");
 	envRSlider.setValue(50);
+	setSliderColours(&envRSlider);
 	// Actually add it
 	editor->addAndMakeVisible(&envRSlider);
 	// Label
