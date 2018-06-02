@@ -22,10 +22,15 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	// Frames
 	addFrames();
 	addElementBox();
+	addOutputFrame();
 
 	// Master Volume Slider
 	addMasterVolumeSlider();
 	masterVolumeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.valueTreeState, "masterVolume", masterVolumeSlider);
+
+	// çonnection id's
+	connectionInputId = -1;
+	connectionOutputId = -1;
 
 	// ==========================================================
 	// CREATE CUTTLE ELEMENTS BY HAND ATM, DO IT IN UI LATER
@@ -59,6 +64,8 @@ void CuttleFishAudioProcessorEditor::resized()
 	masterVolumeFrame.setBounds(0, topFrame.getHeight(), 60, getHeight() - topFrame.getHeight());
 	elementBox.setBounds(0, 0, 200, topFrame.getHeight());
 	newElement.setBounds(200, 0, topFrame.getHeight(), topFrame.getHeight());
+	outputFrame.setBounds(getWidth() - 40, topFrame.getHeight(), 40, getHeight() - topFrame.getHeight());
+	outputButton.setBounds(getWidth() - 35, topFrame.getHeight() / 2 + getHeight() / 2 - 15, 30, 30);
 }
 
 void CuttleFishAudioProcessorEditor::addMasterVolumeSlider()
@@ -106,6 +113,10 @@ void CuttleFishAudioProcessorEditor::buttonClicked(Button * btn)
 	if (btn->getName() == "NewElement") {
 		addCuttleElement(elementBox.getText().toStdString());
 	}
+
+	if (btn->getName() == "OutputButton") {
+		setConnectionOutput(0);
+	}
 }
 
 void CuttleFishAudioProcessorEditor::addFrames()
@@ -119,6 +130,22 @@ void CuttleFishAudioProcessorEditor::addFrames()
 	addAndMakeVisible(&masterVolumeFrame);
 }
 
+void CuttleFishAudioProcessorEditor::addOutputFrame()
+{
+	// Frame
+	outputFrame.setColour(Label::ColourIds::backgroundColourId, Colour(247, 247, 247));
+	outputFrame.setText("", juce::NotificationType::dontSendNotification);
+	addAndMakeVisible(&outputFrame);
+
+	// Button
+	outputButton.setColour(TextButton::ColourIds::textColourOffId, Colour(30, 30, 30));
+	outputButton.setColour(TextButton::ColourIds::buttonColourId, Colour(168, 231, 255));
+	outputButton.setButtonText("O");
+	outputButton.setName("OutputButton");
+	outputButton.addListener(this);
+	addAndMakeVisible(&outputButton);
+}
+
 
 void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
 {
@@ -127,5 +154,26 @@ void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
 
 void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 {
+	// Error checking
+	if (idFrom == -1) { return; }
+	if (idTo == -1) { return; }
+	if (idFrom == idTo) { return; }
+
+	// Link
 	processor.linkElements(idFrom, idTo);
+
+	// Reset state
+	connectionInputId = -1;
+	connectionOutputId = -1;
+}
+
+void CuttleFishAudioProcessorEditor::setConnectionInput(int id)
+{
+	connectionInputId = id;
+}
+
+void CuttleFishAudioProcessorEditor::setConnectionOutput(int id)
+{
+	connectionOutputId = id;
+	linkElements(connectionInputId, connectionOutputId);
 }

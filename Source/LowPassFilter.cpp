@@ -9,6 +9,7 @@
 */
 
 #include "LowPassFilter.h"
+#include "HUD_LowPassFilter.h"
 
 using namespace CuttleFish;
 
@@ -28,6 +29,8 @@ juce::String LowPassFilter::getName() {
 }
 
 double LowPassFilter::getSignal() {
+	cutoff = ((HUD_LowPassFilter*)hudelement)->getCutoff();
+
 	// Check if supplier exists
 	if (!hasSupplier()) { return 0; }
 	// Continue if it does

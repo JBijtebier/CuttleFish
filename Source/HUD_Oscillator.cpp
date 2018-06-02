@@ -12,10 +12,10 @@
 
 using namespace CuttleFish;
 
-HUD_Oscillator::HUD_Oscillator(AudioProcessorEditor *e)
+HUD_Oscillator::HUD_Oscillator(CuttleFishAudioProcessorEditor *e)
 	: HUDElement(e)
 {
-	setSize(200, 230);
+	setSize(200, 270);
 }
 
 CuttleFish::HUD_Oscillator::~HUD_Oscillator()
@@ -29,7 +29,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	// -------------
 	// Params
 	waveTableSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	waveTableSlider.setRange(0.0, 3.0, 0.01);
+	waveTableSlider.setRange(0.0, 3.0, 0.001);
 	waveTableSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	waveTableSlider.setPopupDisplayEnabled(true, true, editor);
 	waveTableSlider.setTextValueSuffix(" Wave Table");
@@ -89,7 +89,7 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	// -------------
 	// Params
 	envSSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	envSSlider.setRange(0.0, 1.0, 0.01);
+	envSSlider.setRange(0.0, 1.0, 0.001);
 	envSSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	envSSlider.setPopupDisplayEnabled(true, true, editor);
 	envSSlider.setTextValueSuffix(" Amp Sustain");

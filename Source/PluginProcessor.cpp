@@ -9,6 +9,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "HUD_Oscillator.h"
+#include "HUD_LowPassFilter.h"
 
 //==============================================================================
 CuttleFishAudioProcessor::CuttleFishAudioProcessor()
@@ -287,12 +288,11 @@ CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string eleme
 	}
 
 	if (elementName == "Oscillator") {
-		return new CuttleFish::HUD_Oscillator(editor);
+		return new CuttleFish::HUD_Oscillator(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
 	}
 
 	if (elementName == "Low Pass Filter") {
-		// TODO
-		return nullptr;
+		return new CuttleFish::HUD_LowPassFilter(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
 	}
 
 	Logger::outputDebugString("Could not create HUD element because name was not found: " + juce::String(elementName));

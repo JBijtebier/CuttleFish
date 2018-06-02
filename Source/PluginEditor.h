@@ -25,6 +25,9 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 
+	void setConnectionInput(int id);
+	void setConnectionOutput(int id);
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -46,11 +49,19 @@ private:
 	Label masterVolumeFrame;
 	void addFrames();
 
+	// OutputButton
+	Label outputFrame;
+	TextButton outputButton;
+	void addOutputFrame();
+
 	//==============================================================================
 	// Cuttle Elements
 	//==============================================================================
 	void addCuttleElement(string elementName);
 	void linkElements(int idFrom, int idTo);
+
+	int connectionInputId;
+	int connectionOutputId;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuttleFishAudioProcessorEditor)
 };

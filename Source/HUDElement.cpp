@@ -16,7 +16,7 @@
 
 using namespace CuttleFish;
 
-HUDElement::HUDElement(AudioProcessorEditor *e)
+HUDElement::HUDElement(CuttleFishAudioProcessorEditor *e)
 {
 	editor = e;
 	setPosition(100, 100);
@@ -59,6 +59,17 @@ void CuttleFish::HUDElement::setBounds()
 
 void CuttleFish::HUDElement::setFrameBounds()
 {
+	bool isGenerator = false;
+	bool isEffect = false;
+
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(cuttleElements[0])) {
+		isGenerator = true;
+	}
+
+	else if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(cuttleElements[0])) {
+		isEffect = true;
+	}
+
 	// Title
 	title.setBounds(transform.getX(), transform.getY(), transform.getWidth(), 30);
 
@@ -67,13 +78,40 @@ void CuttleFish::HUDElement::setFrameBounds()
 
 	// Move Button
 	moveButton.setBounds(transform.getX(), transform.getY(), 30, 30);
+
+	// Bottom
+	bottom.setBounds(transform.getX(), transform.getY() + transform.getHeight() - 40, transform.getWidth(), 40);
+
+	// InputButton
+	if (isEffect) {
+		inputButton.setBounds(transform.getX() + transform.getWidth() * 1 / 3 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
+		outputButton.setBounds(transform.getX() + transform.getWidth() * 2 / 3 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
+	}
+	else {
+		outputButton.setBounds(transform.getX() + transform.getWidth() * 1 / 2 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
+	}
+	
+
+	// OutputButton
+	
+}
+
+void CuttleFish::HUDElement::buttonClicked(Button * btn)
+{
+	if (btn->getName() == "InputButton") {
+		editor->setConnectionInput(cuttleElements[0]->id);
+	}
+
+	if (btn->getName() == "OutputButton") {
+		editor->setConnectionOutput(cuttleElements[1]->id);
+	}
 }
 
 void CuttleFish::HUDElement::mouseDrag(const MouseEvent & event)
 {
 	Point<int> diff = event.getPosition();
 
-	Rectangle<int> newPos = transform + diff - dragStart;
+	juce::Rectangle<int> newPos = transform + diff - dragStart;
 
 	if (positionIsLegal(newPos)) {
 		transform = newPos;
@@ -95,7 +133,7 @@ bool CuttleFish::HUDElement::positionIsLegal(juce::Rectangle<int> pos)
 	}
 
 	// Right border
-	if (pos.getX() + pos.getWidth() > editor->getBounds().getWidth()) {
+	if (pos.getX() + pos.getWidth() > editor->getBounds().getWidth() - 40) {
 		return false;
 	}
 
@@ -119,6 +157,17 @@ void CuttleFish::HUDElement::setSliderColours(Slider * slider)
 
 void CuttleFish::HUDElement::instantiateFrame()
 {
+	bool isGenerator = false;
+	bool isEffect = false;
+
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(cuttleElements[0])) {
+		isGenerator = true;
+	}
+
+	else if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(cuttleElements[0])) {
+		isEffect = true;
+	}
+
 	// --------------
 	// Frame
 	// --------------
@@ -131,18 +180,13 @@ void CuttleFish::HUDElement::instantiateFrame()
 	// Title
 	// --------------
 	// generator color
-	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(cuttleElements[0])) {
+	if (isGenerator) {
 		title.setColour(Label::ColourIds::textColourId, Colour(171, 255, 176));
 	}
 
 	// effect color
-	else if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(cuttleElements[0])) {
+	else if (isEffect) {
 		title.setColour(Label::ColourIds::textColourId, Colour(168, 231, 255));
-	}
-
-	// output color
-	else if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(cuttleElements[0])) {
-		title.setColour(Label::ColourIds::textColourId, Colour(200, 180, 255));
 	}
 
 	title.setColour(Label::ColourIds::backgroundColourId, Colour(29, 33, 37));
@@ -160,4 +204,36 @@ void CuttleFish::HUDElement::instantiateFrame()
 	moveButton.setName("MoveButton");
 	moveButton.addMouseListener(this, false);
 	editor->addAndMakeVisible(&moveButton);
+
+	// --------------
+	// Bottom
+	// --------------
+	// generator color
+	bottom.setColour(Label::ColourIds::backgroundColourId, Colour(60, 60, 60));
+	bottom.setColour(Label::ColourIds::outlineColourId, Colour(29, 33, 37));
+	bottom.setText("", juce::NotificationType::dontSendNotification);
+	editor->addAndMakeVisible(&bottom);
+
+
+	// --------------
+	// Input Button
+	// --------------
+	if (isEffect) {
+		inputButton.setColour(TextButton::ColourIds::textColourOffId, Colour(30, 30, 30));
+		inputButton.setColour(TextButton::ColourIds::buttonColourId, Colour(171, 255, 176));
+		inputButton.setButtonText("I");
+		inputButton.setName("InputButton");
+		inputButton.addListener(this);
+		editor->addAndMakeVisible(&inputButton);
+	}
+
+	// --------------
+	// Output Button
+	// --------------
+	outputButton.setColour(TextButton::ColourIds::textColourOffId, Colour(30, 30, 30));
+	outputButton.setColour(TextButton::ColourIds::buttonColourId, Colour(168, 231, 255));
+	outputButton.setButtonText("O");
+	outputButton.setName("OutputButton");
+	outputButton.addListener(this);
+	editor->addAndMakeVisible(&outputButton);
 }

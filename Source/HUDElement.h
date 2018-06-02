@@ -10,15 +10,16 @@
 
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "PluginEditor.h"
 #include <vector>
 
 namespace CuttleFish {
 
 	class CuttleElement;
 
-	class HUDElement : MouseListener {
+	class HUDElement : MouseListener, Button::Listener {
 	public:
-		HUDElement(AudioProcessorEditor *e);
+		HUDElement(CuttleFishAudioProcessorEditor *e);
 		~HUDElement();
 
 		void setPosition(int x, int y);
@@ -39,6 +40,9 @@ namespace CuttleFish {
 		void setFrameBounds();
 		virtual void setControlBounds() = 0;
 
+		// Button Listener
+		void buttonClicked(Button * btn) override;
+
 		// Mouse Listener
 		void mouseDrag(const MouseEvent &event) override;
 		void mouseDown(const MouseEvent &event) override;
@@ -49,12 +53,15 @@ namespace CuttleFish {
 
 		juce::Rectangle<int> transform;
 		std::vector<CuttleElement *> cuttleElements;
-		AudioProcessorEditor *editor;
+		CuttleFishAudioProcessorEditor *editor;
 		Point<int> dragStart;
 
 		Label title;
 		Label frame;
+		Label bottom;
 		TextButton moveButton;
+		TextButton inputButton;
+		TextButton outputButton;
 	};
 
 }
