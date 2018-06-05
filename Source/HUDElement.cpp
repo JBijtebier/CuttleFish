@@ -16,9 +16,8 @@
 
 using namespace CuttleFish;
 
-HUDElement::HUDElement(CuttleFishAudioProcessorEditor *e)
+HUDElement::HUDElement()
 {
-	editor = e;
 	setPosition(100, 100);
 }
 
@@ -49,6 +48,36 @@ void CuttleFish::HUDElement::setSize(int width, int height)
 void HUDElement::addCuttleElement(CuttleElement * elem)
 {
 	cuttleElements.push_back(elem);
+}
+
+void CuttleFish::HUDElement::makeVisibleInEditor()
+{
+	makeFrameVisibleInEditor();
+	makeControlsVisibleInEditor();
+}
+
+void CuttleFish::HUDElement::makeFrameVisibleInEditor()
+{
+	bool isGenerator = false;
+	bool isEffect = false;
+
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(cuttleElements[0])) {
+		isGenerator = true;
+	}
+
+	else if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(cuttleElements[0])) {
+		isEffect = true;
+	}
+
+	editor->addAndMakeVisible(&frame);
+	editor->addAndMakeVisible(&title);
+	editor->addAndMakeVisible(&moveButton);
+	editor->addAndMakeVisible(&bottom);
+	editor->addAndMakeVisible(&outputButton);
+
+	if (isEffect) {
+		editor->addAndMakeVisible(&inputButton);
+	}
 }
 
 void CuttleFish::HUDElement::setBounds()
@@ -125,6 +154,11 @@ void CuttleFish::HUDElement::mouseDown(const MouseEvent & event)
 	dragStart = event.getPosition();
 }
 
+void CuttleFish::HUDElement::setEditor(CuttleFishAudioProcessorEditor * e)
+{
+	editor = e;
+}
+
 bool CuttleFish::HUDElement::positionIsLegal(juce::Rectangle<int> pos)
 {
 	// Left border (including master volume slider)
@@ -174,7 +208,6 @@ void CuttleFish::HUDElement::instantiateFrame()
 	frame.setColour(Label::ColourIds::outlineColourId, Colour(29, 33, 37));
 	frame.setColour(Label::ColourIds::backgroundColourId, Colour(247, 247, 247));
 	frame.setText("", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&frame);
 
 	// --------------
 	// Title
@@ -193,7 +226,6 @@ void CuttleFish::HUDElement::instantiateFrame()
 	title.setJustificationType(Justification::centred);
 	title.setFont(Font(16, Font::bold));
 	title.setText(cuttleElements[0]->getName().toUpperCase(), juce::NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&title);
 
 	// --------------
 	// Move Button
@@ -203,7 +235,6 @@ void CuttleFish::HUDElement::instantiateFrame()
 	moveButton.setButtonText("M");
 	moveButton.setName("MoveButton");
 	moveButton.addMouseListener(this, false);
-	editor->addAndMakeVisible(&moveButton);
 
 	// --------------
 	// Bottom
@@ -212,7 +243,6 @@ void CuttleFish::HUDElement::instantiateFrame()
 	bottom.setColour(Label::ColourIds::backgroundColourId, Colour(60, 60, 60));
 	bottom.setColour(Label::ColourIds::outlineColourId, Colour(29, 33, 37));
 	bottom.setText("", juce::NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&bottom);
 
 
 	// --------------
@@ -224,7 +254,6 @@ void CuttleFish::HUDElement::instantiateFrame()
 		inputButton.setButtonText("I");
 		inputButton.setName("InputButton");
 		inputButton.addListener(this);
-		editor->addAndMakeVisible(&inputButton);
 	}
 
 	// --------------
@@ -235,5 +264,4 @@ void CuttleFish::HUDElement::instantiateFrame()
 	outputButton.setButtonText("O");
 	outputButton.setName("OutputButton");
 	outputButton.addListener(this);
-	editor->addAndMakeVisible(&outputButton);
 }

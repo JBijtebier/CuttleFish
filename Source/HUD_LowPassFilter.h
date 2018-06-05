@@ -17,11 +17,12 @@ namespace CuttleFish {
 
 	class HUD_LowPassFilter : public HUDElement {
 	public:
-		HUD_LowPassFilter(CuttleFishAudioProcessorEditor *e);
+		HUD_LowPassFilter();
 		~HUD_LowPassFilter();
 
 		void instantiateControls() override;
 		void setControlBounds() override;
+		void makeControlsVisibleInEditor() override;
 
 		double getCutoff();
 

@@ -32,11 +32,19 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	connectionInputId = -1;
 	connectionOutputId = -1;
 
-	// ==========================================================
-	// CREATE CUTTLE ELEMENTS BY HAND ATM, DO IT IN UI LATER
-	// ==========================================================
-	addCuttleElement("Oscillator"); // id 1
-	linkElements(1, 0); // LPF -> OUT
+	// HUD rebuilding
+	processor.setNewEditor(this);
+
+	// ==============
+	// LOGGING
+	// ==============
+	logLabel.setColour(Label::ColourIds::textColourId, Colour(0, 0, 0));
+	logLabel.setColour(Label::ColourIds::backgroundColourId, Colour(255, 255, 255));
+	logLabel.setJustificationType(Justification::centred);
+	logLabel.setFont(Font(16, Font::bold));
+	logLabel.setText("Log", juce::NotificationType::dontSendNotification);
+	logLabel.setBounds(0, getHeight() - 32, getWidth(), 32);
+	addAndMakeVisible(logLabel);
 }
 
 CuttleFishAudioProcessorEditor::~CuttleFishAudioProcessorEditor()
@@ -115,7 +123,7 @@ void CuttleFishAudioProcessorEditor::buttonClicked(Button * btn)
 	}
 
 	if (btn->getName() == "OutputButton") {
-		setConnectionOutput(0);
+		setConnectionInput(0);
 	}
 }
 
@@ -154,6 +162,8 @@ void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
 
 void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 {
+	log("Linking... " + juce::String(idFrom) + " to " + juce::String(idTo));
+
 	// Error checking
 	if (idFrom == -1) { return; }
 	if (idTo == -1) { return; }
@@ -161,6 +171,8 @@ void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 
 	// Link
 	processor.linkElements(idFrom, idTo);
+
+	log("Linked " + juce::String(idFrom) + " to " + juce::String(idTo));
 
 	// Reset state
 	connectionInputId = -1;
@@ -170,10 +182,15 @@ void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 void CuttleFishAudioProcessorEditor::setConnectionInput(int id)
 {
 	connectionInputId = id;
+	linkElements(connectionOutputId, connectionInputId);
 }
 
 void CuttleFishAudioProcessorEditor::setConnectionOutput(int id)
 {
 	connectionOutputId = id;
-	linkElements(connectionInputId, connectionOutputId);
+}
+
+void CuttleFishAudioProcessorEditor::log(juce::String s)
+{
+	logLabel.setText(s, juce::NotificationType::dontSendNotification);
 }

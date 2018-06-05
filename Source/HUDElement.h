@@ -19,7 +19,7 @@ namespace CuttleFish {
 
 	class HUDElement : MouseListener, Button::Listener {
 	public:
-		HUDElement(CuttleFishAudioProcessorEditor *e);
+		HUDElement();
 		~HUDElement();
 
 		void setPosition(int x, int y);
@@ -29,6 +29,11 @@ namespace CuttleFish {
 		void setSize(int width, int height);
 
 		void addCuttleElement(CuttleElement *elem);
+
+		// Drawing
+		void makeVisibleInEditor();
+		void makeFrameVisibleInEditor();
+		virtual void makeControlsVisibleInEditor() = 0;
 
 		// Instantiation
 		void instantiateUI();
@@ -47,13 +52,15 @@ namespace CuttleFish {
 		void mouseDrag(const MouseEvent &event) override;
 		void mouseDown(const MouseEvent &event) override;
 
+		void setEditor(CuttleFishAudioProcessorEditor *e);
+
 	protected:
 		bool positionIsLegal(juce::Rectangle<int> pos);
 		void setSliderColours(Slider* slider);
+		CuttleFishAudioProcessorEditor* editor;
 
 		juce::Rectangle<int> transform;
 		std::vector<CuttleElement *> cuttleElements;
-		CuttleFishAudioProcessorEditor *editor;
 		Point<int> dragStart;
 
 		Label title;

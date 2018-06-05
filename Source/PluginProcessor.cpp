@@ -282,17 +282,16 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 
 CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string elementName, AudioProcessorEditor *editor)
 {
-	if (elementName == "Output") {
-		// TODO
-		return nullptr;
-	}
-
 	if (elementName == "Oscillator") {
-		return new CuttleFish::HUD_Oscillator(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		CuttleFish::HUD_Oscillator* elem = new CuttleFish::HUD_Oscillator();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		return elem;
 	}
 
 	if (elementName == "Low Pass Filter") {
-		return new CuttleFish::HUD_LowPassFilter(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		CuttleFish::HUD_LowPassFilter* elem = new CuttleFish::HUD_LowPassFilter();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		return elem;
 	}
 
 	Logger::outputDebugString("Could not create HUD element because name was not found: " + juce::String(elementName));
@@ -303,6 +302,7 @@ void CuttleFishAudioProcessor::addCuttleElement(string elementName, AudioProcess
 {
 	// Create the HUD element
 	CuttleFish::HUDElement *hud = createHUDElement(elementName, editor);
+	hudElements.push_back(hud);
 
 	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {
 
@@ -321,6 +321,7 @@ void CuttleFishAudioProcessor::addCuttleElement(string elementName, AudioProcess
 	}
 
 	hud->instantiateUI();
+	hud->makeVisibleInEditor();
 
 	currentElementId++;
 }
@@ -333,5 +334,15 @@ void CuttleFishAudioProcessor::linkElements(int idFrom, int idTo)
 		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
 			cuttleVoice->linkElements(idFrom, idTo);
 		}
+	}
+}
+
+void CuttleFishAudioProcessor::setNewEditor(AudioProcessorEditor * editor)
+{
+	CuttleFishAudioProcessorEditor* e = dynamic_cast<CuttleFishAudioProcessorEditor*>(editor);
+
+	for (std::vector<CuttleFish::HUDElement*>::iterator it = hudElements.begin(); it != hudElements.end(); it++) {
+		(*it)->setEditor(e);
+		(*it)->makeVisibleInEditor();
 	}
 }

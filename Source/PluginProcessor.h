@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSound.h"
 #include "SynthVoice.h"
+#include <vector>
 
 //==============================================================================
 /**
@@ -67,6 +68,10 @@ public:
 	CuttleFish::HUDElement* createHUDElement(string elementName, AudioProcessorEditor *editor);
 	void addCuttleElement(string elementName, AudioProcessorEditor *editor);
 	void linkElements(int idFrom, int idTo);
+
+	//==============================================================================
+	std::vector<CuttleFish::HUDElement*> hudElements;
+	void setNewEditor(AudioProcessorEditor *editor);
 
 private:
 	Synthesiser cuttleSynth;

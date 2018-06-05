@@ -28,6 +28,8 @@ public:
 	void setConnectionInput(int id);
 	void setConnectionOutput(int id);
 
+	void log(juce::String s);
+
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -53,6 +55,9 @@ private:
 	Label outputFrame;
 	TextButton outputButton;
 	void addOutputFrame();
+
+
+	Label logLabel;
 
 	//==============================================================================
 	// Cuttle Elements

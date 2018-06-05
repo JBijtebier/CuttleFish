@@ -12,8 +12,7 @@
 
 using namespace CuttleFish;
 
-HUD_Oscillator::HUD_Oscillator(CuttleFishAudioProcessorEditor *e)
-	: HUDElement(e)
+HUD_Oscillator::HUD_Oscillator()
 {
 	setSize(200, 270);
 }
@@ -35,14 +34,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	waveTableSlider.setTextValueSuffix(" Wave Table");
 	waveTableSlider.setValue(0.0);
 	setSliderColours(&waveTableSlider);
-	// Actually add it
-	editor->addAndMakeVisible(&waveTableSlider);
 	// Label
 	waveTableLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	waveTableLabel.setJustificationType(Justification::centred);
 	waveTableLabel.setFont(Font(12, Font::bold));
 	waveTableLabel.setText("Wave Table", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&waveTableLabel);
 
 	// -------------
 	// Env A
@@ -55,14 +51,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envASlider.setTextValueSuffix(" msec Attack");
 	envASlider.setValue(25);
 	setSliderColours(&envASlider);
-	// Actually add it
-	editor->addAndMakeVisible(&envASlider);
 	// Label
 	envALabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envALabel.setJustificationType(Justification::centred);
 	envALabel.setFont(Font(12, Font::bold));
 	envALabel.setText("A", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&envALabel);
 
 	// -------------
 	// Env D
@@ -75,14 +68,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envDSlider.setTextValueSuffix(" msec Decay");
 	envDSlider.setValue(500);
 	setSliderColours(&envDSlider);
-	// Actually add it
-	editor->addAndMakeVisible(&envDSlider);
 	// Label
 	envDLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envDLabel.setJustificationType(Justification::centred);
 	envDLabel.setFont(Font(12, Font::bold));
 	envDLabel.setText("D", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&envDLabel);
 
 	// -------------
 	// Env S
@@ -95,14 +85,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envSSlider.setTextValueSuffix(" Amp Sustain");
 	envSSlider.setValue(0.75);
 	setSliderColours(&envSSlider);
-	// Actually add it
-	editor->addAndMakeVisible(&envSSlider);
 	// Label
 	envSLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envSLabel.setJustificationType(Justification::centred);
 	envSLabel.setFont(Font(12, Font::bold));
 	envSLabel.setText("S", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&envSLabel);
 
 	// -------------
 	// Env R
@@ -114,15 +101,11 @@ void CuttleFish::HUD_Oscillator::instantiateControls()
 	envRSlider.setPopupDisplayEnabled(true, true, editor);
 	envRSlider.setTextValueSuffix(" msec Release");
 	envRSlider.setValue(50);
-	setSliderColours(&envRSlider);
-	// Actually add it
-	editor->addAndMakeVisible(&envRSlider);
 	// Label
 	envRLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));
 	envRLabel.setJustificationType(Justification::centred);
 	envRLabel.setFont(Font(12, Font::bold));
 	envRLabel.setText("R", NotificationType::dontSendNotification);
-	editor->addAndMakeVisible(&envRLabel);
 }
 
 void CuttleFish::HUD_Oscillator::setControlBounds()
@@ -146,6 +129,21 @@ void CuttleFish::HUD_Oscillator::setControlBounds()
 	// Env R
 	envRSlider.setBounds(transform.getX() + 150, transform.getY() + 180, 50, 50);
 	envRLabel.setBounds(transform.getX() + 150, transform.getY() + 170, 50, 15);
+}
+
+void CuttleFish::HUD_Oscillator::makeControlsVisibleInEditor()
+{
+	editor->addAndMakeVisible(&waveTableSlider);
+	editor->addAndMakeVisible(&waveTableLabel);
+
+	editor->addAndMakeVisible(&envASlider);
+	editor->addAndMakeVisible(&envALabel);
+	editor->addAndMakeVisible(&envDSlider);
+	editor->addAndMakeVisible(&envDLabel);
+	editor->addAndMakeVisible(&envSSlider);
+	editor->addAndMakeVisible(&envSLabel);
+	editor->addAndMakeVisible(&envRSlider);
+	editor->addAndMakeVisible(&envRLabel);
 }
 
 double CuttleFish::HUD_Oscillator::getWaveTable()
