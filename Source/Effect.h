@@ -18,10 +18,16 @@ namespace CuttleFish {
 		Effect(int elementId);
 
 		void setSupplier(CuttleElement *newSupplier);
+		void setSuccessor(CuttleElement *newSuccessor);
 		bool hasSupplier();
+		bool hasSuccessor();
+
+		Line<float> getOutgoingLine() override;
+		bool hasOutgoingLine() override;
 
 	protected:
 		CuttleElement * supplier;
+		CuttleElement * successor;
 	};
 
 }

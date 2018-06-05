@@ -54,6 +54,11 @@ namespace CuttleFish {
 
 		void setEditor(CuttleFishAudioProcessorEditor *e);
 
+		Line<float> getOutgoingLine();
+		bool hasOutgoingLine();
+		Point<float> getOutputPosition();
+		Point<float> getInputPosition();
+
 	protected:
 		bool positionIsLegal(juce::Rectangle<int> pos);
 		void setSliderColours(Slider* slider);

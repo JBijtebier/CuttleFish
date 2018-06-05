@@ -156,21 +156,35 @@ void SynthVoice::linkElements(int idFrom, int idTo)
 	CuttleFish::CuttleElement *from = getCuttleElement(idFrom);
 	CuttleFish::CuttleElement *to = getCuttleElement(idTo);
 
-	// 'To' is a generator
+	// To a generator
 	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(to)) {
 		Logger::outputDebugString("Can't link TO a generator. Can only link FROM an output/generator/effect TO an output/effect.");
 		return;
 	}
 
-	// 'To' is an effect
+	// To an effect
 	if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(to)) {
 		effect->setSupplier(from);
-		return;
 	}
 
-	// 'To' is an output
+	// To an output
 	if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(to)) {
 		newOutput->setSupplier(from);
+	}
+
+	// From a generator
+	if (CuttleFish::Generator *g = dynamic_cast<CuttleFish::Generator*>(from)) {
+		g->setSuccessor(to);
+	}
+
+	// From an effect
+	if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(from)) {
+		e->setSuccessor(to);
+	}
+
+	// From an output
+	if (CuttleFish::Output *o = dynamic_cast<CuttleFish::Output*>(from)) {
+		Logger::outputDebugString("Can't link FROM an output. Can only link FROM a generator/effect TO an output/effect.");
 		return;
 	}
 }

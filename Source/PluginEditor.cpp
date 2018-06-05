@@ -8,6 +8,8 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "HUDElement.h"
+#include "Output.h"
 
 //==============================================================================
 CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioProcessor& p)
@@ -44,6 +46,7 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	logLabel.setFont(Font(16, Font::bold));
 	logLabel.setText("Log", juce::NotificationType::dontSendNotification);
 	logLabel.setBounds(0, getHeight() - 32, getWidth(), 32);
+	// UNCOMMENT TO ENABLE THE LIVE LOG
 	addAndMakeVisible(logLabel);
 }
 
@@ -52,14 +55,20 @@ CuttleFishAudioProcessorEditor::~CuttleFishAudioProcessorEditor()
 }
 
 //==============================================================================
-void CuttleFishAudioProcessorEditor::paint (Graphics& g)
+void CuttleFishAudioProcessorEditor::paint(Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (Colour(230, 230, 230));
+	// (Our component is opaque, so we must completely fill the background with a solid colour)
+	g.fillAll(Colour(230, 230, 230));
 
-    // g.setColour (Colours::black);
-    // g.setFont (15.0f);
-    // g.drawFittedText ("Master Volume", 0, 0, getWidth(), 30, Justification::centred, 1);
+	// Draw output Lines
+	for (std::vector<CuttleFish::HUDElement*>::iterator it = processor.hudElements.begin(); it != processor.hudElements.end(); it++) {
+		if ((*it)->hasOutgoingLine()) {
+			g.setColour(Colour(168, 231, 255));
+			Line<float> line = Line<float>((*it)->getOutgoingLine());
+
+			g.drawLine(line, 10);
+		}
+	}
 }
 
 void CuttleFishAudioProcessorEditor::resized()
@@ -74,6 +83,7 @@ void CuttleFishAudioProcessorEditor::resized()
 	newElement.setBounds(200, 0, topFrame.getHeight(), topFrame.getHeight());
 	outputFrame.setBounds(getWidth() - 40, topFrame.getHeight(), 40, getHeight() - topFrame.getHeight());
 	outputButton.setBounds(getWidth() - 35, topFrame.getHeight() / 2 + getHeight() / 2 - 15, 30, 30);
+	CuttleFish::Output::position = outputButton.getPosition() + Point<int>(outputButton.getWidth() / 2, outputButton.getHeight() / 2);
 }
 
 void CuttleFishAudioProcessorEditor::addMasterVolumeSlider()
@@ -162,8 +172,6 @@ void CuttleFishAudioProcessorEditor::addCuttleElement(string elementName)
 
 void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 {
-	log("Linking... " + juce::String(idFrom) + " to " + juce::String(idTo));
-
 	// Error checking
 	if (idFrom == -1) { return; }
 	if (idTo == -1) { return; }
@@ -172,7 +180,11 @@ void CuttleFishAudioProcessorEditor::linkElements(int idFrom, int idTo)
 	// Link
 	processor.linkElements(idFrom, idTo);
 
+	// Log
 	log("Linked " + juce::String(idFrom) + " to " + juce::String(idTo));
+
+	// Repaint
+	this->repaint();
 
 	// Reset state
 	connectionInputId = -1;

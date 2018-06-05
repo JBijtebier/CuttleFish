@@ -56,7 +56,6 @@ private:
 	TextButton outputButton;
 	void addOutputFrame();
 
-
 	Label logLabel;
 
 	//==============================================================================

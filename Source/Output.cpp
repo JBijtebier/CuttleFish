@@ -12,6 +12,8 @@
 
 using namespace CuttleFish;
 
+Point<int> Output::position = Point<int>();
+
 Output::Output(int elementId)
 : CuttleElement(elementId)
 {
@@ -41,4 +43,16 @@ void Output::setSupplier(CuttleElement *newSupplier) {
 bool Output::hasSupplier()
 {
 	return (supplier != nullptr);
+}
+
+Line<float> CuttleFish::Output::getOutgoingLine()
+{
+	Logger::outputDebugString("Can't get outgoing line from an output. This shouldn't be asked for anyway.");
+
+	return Line<float>();
+}
+
+bool CuttleFish::Output::hasOutgoingLine()
+{
+	return false;
 }

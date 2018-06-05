@@ -18,6 +18,8 @@ namespace CuttleFish {
 		Output(int elementId);
 		~Output();
 
+		static Point<int> position;
+
 		juce::String getName() override;
 
 		double getSignal() override;
@@ -25,6 +27,10 @@ namespace CuttleFish {
 		void setSupplier(CuttleElement *newSupplier);
 
 		bool hasSupplier();
+
+		Line<float> getOutgoingLine() override;
+
+		bool hasOutgoingLine() override;
 
 	private:
 		CuttleElement * supplier;

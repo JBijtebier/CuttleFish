@@ -111,7 +111,7 @@ void CuttleFish::HUDElement::setFrameBounds()
 	// Bottom
 	bottom.setBounds(transform.getX(), transform.getY() + transform.getHeight() - 40, transform.getWidth(), 40);
 
-	// InputButton
+	// Input and Output Button
 	if (isEffect) {
 		inputButton.setBounds(transform.getX() + transform.getWidth() * 1 / 3 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
 		outputButton.setBounds(transform.getX() + transform.getWidth() * 2 / 3 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
@@ -119,10 +119,6 @@ void CuttleFish::HUDElement::setFrameBounds()
 	else {
 		outputButton.setBounds(transform.getX() + transform.getWidth() * 1 / 2 - 15, transform.getY() + transform.getHeight() - 35, 30, 30);
 	}
-	
-
-	// OutputButton
-	
 }
 
 void CuttleFish::HUDElement::buttonClicked(Button * btn)
@@ -144,6 +140,7 @@ void CuttleFish::HUDElement::mouseDrag(const MouseEvent & event)
 
 	if (positionIsLegal(newPos)) {
 		transform = newPos;
+		editor->repaint();
 	}
 
 	setBounds();
@@ -157,6 +154,28 @@ void CuttleFish::HUDElement::mouseDown(const MouseEvent & event)
 void CuttleFish::HUDElement::setEditor(CuttleFishAudioProcessorEditor * e)
 {
 	editor = e;
+}
+
+Line<float> CuttleFish::HUDElement::getOutgoingLine()
+{
+	return cuttleElements[0]->getOutgoingLine();
+}
+
+bool CuttleFish::HUDElement::hasOutgoingLine()
+{
+	return cuttleElements[0]->hasOutgoingLine();
+}
+
+Point<float> CuttleFish::HUDElement::getOutputPosition()
+{
+	float buttonWidth = outputButton.getWidth();
+	return outputButton.getPosition().toFloat() + Point<float>(buttonWidth / 2, buttonWidth / 2);
+}
+
+Point<float> CuttleFish::HUDElement::getInputPosition()
+{
+	float buttonWidth = inputButton.getWidth();
+	return inputButton.getPosition().toFloat() + Point<float>(buttonWidth / 2, buttonWidth / 2);
 }
 
 bool CuttleFish::HUDElement::positionIsLegal(juce::Rectangle<int> pos)

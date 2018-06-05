@@ -24,11 +24,14 @@ namespace CuttleFish {
 
 		virtual double getSignal() = 0;
 
+		virtual Line<float> getOutgoingLine() = 0;
+
+		virtual bool hasOutgoingLine() = 0;
+
 		void setHUDElement(HUDElement* elem);
 
 		int id;
 
-	protected:
 		HUDElement* hudelement;
 	};
 
