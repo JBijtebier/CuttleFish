@@ -1,1 +1,2 @@
 - Remove old links when creating new links
+- Background image
