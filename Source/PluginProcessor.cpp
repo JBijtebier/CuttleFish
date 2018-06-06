@@ -9,8 +9,11 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "HUD_Oscillator.h"
+#include "HUD_NoiseGenerator.h"
 #include "HUD_LowPassFilter.h"
 #include "HUD_HighPassFilter.h"
+#include "HUD_Noisifier.h"
+#include "HUD_PowerShaper.h"
 
 //==============================================================================
 CuttleFishAudioProcessor::CuttleFishAudioProcessor()
@@ -273,12 +276,24 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 		return new CuttleFish::Oscillator(id);
 	}
 
+	if (elementName == "Noise Generator") {
+		return new CuttleFish::NoiseGenerator(id);
+	}
+
 	if (elementName == "Low Pass Filter") {
 		return new CuttleFish::LowPassFilter(id);
 	}
 
 	if (elementName == "High Pass Filter") {
 		return new CuttleFish::HighPassFilter(id);
+	}
+
+	if (elementName == "Noisifier") {
+		return new CuttleFish::Noisifier(id);
+	}
+
+	if (elementName == "Power Shaper") {
+		return new CuttleFish::PowerShaper(id);
 	}
 
 	Logger::outputDebugString("Could not create cuttle element because name was not found: " + juce::String(elementName));
@@ -296,6 +311,13 @@ CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string eleme
 		return elem;
 	}
 
+	if (elementName == "Noise Generator") {
+		CuttleFish::HUD_NoiseGenerator* elem = new CuttleFish::HUD_NoiseGenerator();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
+		return elem;
+	}
+
 	if (elementName == "Low Pass Filter") {
 		CuttleFish::HUD_LowPassFilter* elem = new CuttleFish::HUD_LowPassFilter();
 		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
@@ -305,6 +327,20 @@ CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string eleme
 
 	if (elementName == "High Pass Filter") {
 		CuttleFish::HUD_HighPassFilter* elem = new CuttleFish::HUD_HighPassFilter();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
+		return elem;
+	}
+
+	if (elementName == "Noisifier") {
+		CuttleFish::HUD_Noisifier* elem = new CuttleFish::HUD_Noisifier();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
+		return elem;
+	}
+
+	if (elementName == "Power Shaper") {
+		CuttleFish::HUD_PowerShaper* elem = new CuttleFish::HUD_PowerShaper();
 		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
 		elem->setPosition(pos);
 		return elem;

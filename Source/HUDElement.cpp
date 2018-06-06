@@ -242,7 +242,7 @@ void CuttleFish::HUDElement::instantiateFrame()
 
 	title.setColour(Label::ColourIds::backgroundColourId, Colour(29, 33, 37));
 	title.setJustificationType(Justification::centred);
-	title.setFont(Font(16, Font::bold));
+	title.setFont(Font(12, Font::bold));
 	title.setText(cuttleElements[0]->getName().toUpperCase(), juce::NotificationType::dontSendNotification);
 
 	// --------------

@@ -111,12 +111,15 @@ void CuttleFishAudioProcessorEditor::addElementBox()
 	// Generators
 	elementBox.addSectionHeading("Generators");
 	elementBox.addItem("Oscillator", 1);
+	elementBox.addItem("Noise Generator", 2);
 	elementBox.addSeparator();
 
 	// Effects
 	elementBox.addSectionHeading("Effects");
-	elementBox.addItem("Low Pass Filter", 2);
-	elementBox.addItem("High Pass Filter", 3);
+	elementBox.addItem("Low Pass Filter", 3);
+	elementBox.addItem("High Pass Filter", 4);
+	elementBox.addItem("Noisifier", 5);
+	elementBox.addItem("Power Shaper", 6);
 	elementBox.setSelectedId(1);
 	addAndMakeVisible(&elementBox);
 

@@ -14,8 +14,11 @@
 #include "maximilian.h"
 #include "Output.h"
 #include "Oscillator.h"
+#include "NoiseGenerator.h"
 #include "LowPassFilter.h"
 #include "HighPassFilter.h"
+#include "Noisifier.h"
+#include "PowerShaper.h"
 #include <vector>
 
 class SynthVoice : public SynthesiserVoice {
