@@ -14,7 +14,7 @@ using namespace CuttleFish;
 
 HUD_NoiseGenerator::HUD_NoiseGenerator()
 {
-	setSize(200, 130);
+	setSize(200, 135);
 }
 
 CuttleFish::HUD_NoiseGenerator::~HUD_NoiseGenerator()
@@ -108,6 +108,18 @@ void CuttleFish::HUD_NoiseGenerator::setControlBounds()
 	// Env R
 	envRSlider.setBounds(transform.getX() + 150, transform.getY() + 45, 50, 50);
 	envRLabel.setBounds(transform.getX() + 150, transform.getY() + 35, 50, 15);
+}
+
+void CuttleFish::HUD_NoiseGenerator::removeControlsFromEditor()
+{
+	editor->removeChildComponent(&envASlider);
+	editor->removeChildComponent(&envALabel);
+	editor->removeChildComponent(&envDSlider);
+	editor->removeChildComponent(&envDLabel);
+	editor->removeChildComponent(&envSSlider);
+	editor->removeChildComponent(&envSLabel);
+	editor->removeChildComponent(&envRSlider);
+	editor->removeChildComponent(&envRLabel);
 }
 
 void CuttleFish::HUD_NoiseGenerator::makeControlsVisibleInEditor()

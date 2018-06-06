@@ -43,6 +43,8 @@ class SynthVoice : public SynthesiserVoice {
 
 		void addCuttleElement(CuttleFish::CuttleElement *element);
 
+		void removeCuttleElement(int id);
+
 		void linkElements(int idFrom, int idTo);
 
 	private:

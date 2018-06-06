@@ -131,6 +131,21 @@ void CuttleFish::HUD_Oscillator::setControlBounds()
 	envRLabel.setBounds(transform.getX() + 150, transform.getY() + 170, 50, 15);
 }
 
+void CuttleFish::HUD_Oscillator::removeControlsFromEditor()
+{
+	editor->removeChildComponent(&waveTableSlider);
+	editor->removeChildComponent(&waveTableLabel);
+
+	editor->removeChildComponent(&envASlider);
+	editor->removeChildComponent(&envALabel);
+	editor->removeChildComponent(&envDSlider);
+	editor->removeChildComponent(&envDLabel);
+	editor->removeChildComponent(&envSSlider);
+	editor->removeChildComponent(&envSLabel);
+	editor->removeChildComponent(&envRSlider);
+	editor->removeChildComponent(&envRLabel);
+}
+
 void CuttleFish::HUD_Oscillator::makeControlsVisibleInEditor()
 {
 	editor->addAndMakeVisible(&waveTableSlider);

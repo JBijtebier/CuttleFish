@@ -139,6 +139,81 @@ void SynthVoice::addCuttleElement(CuttleFish::CuttleElement *element)
 	}
 }
 
+void SynthVoice::removeCuttleElement(int id)
+{
+	Logger::outputDebugString("A1");
+
+	// ----------
+	// Remove Links
+	// ----------
+	CuttleFish::CuttleElement *elem = getCuttleElement(id);
+
+	// Element is a generator
+	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(elem)) {
+		// Successor is output
+		if (CuttleFish::Output *o = dynamic_cast<CuttleFish::Output*>(generator->getSuccessor())) {
+			o->setSupplier(nullptr);
+		}
+
+		// Successor is effect
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(generator->getSuccessor())) {
+			e->setSupplier(nullptr);
+		}
+	}
+
+	Logger::outputDebugString("A2");
+
+	// Element is an effect
+	if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(elem)) {
+		// Successor is output
+		if (CuttleFish::Output *o = dynamic_cast<CuttleFish::Output*>(effect->getSuccessor())) {
+			o->setSupplier(nullptr);
+		}
+
+		// Successor is effect
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(effect->getSuccessor())) {
+			e->setSupplier(nullptr);
+		}
+
+		// Supplier is generator
+		if (CuttleFish::Generator *g = dynamic_cast<CuttleFish::Generator*>(effect->getSupplier())) {
+			g->setSuccessor(nullptr);
+		}
+
+		// Supplier is effect
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(effect->getSupplier())) {
+			e->setSuccessor(nullptr);
+		}
+	}
+
+	Logger::outputDebugString("A3");
+
+
+	// ----------
+	// Delete and remove from vectors
+	// ----------
+	for (auto it = effects.begin(); it != effects.end();) {
+		if ((*it)->id == id) {
+			delete * it;
+			it = effects.erase(it);
+		} else {
+			++it;
+		}
+	}
+
+	for (auto it = generators.begin(); it != generators.end();) {
+		if ((*it)->id == id) {
+			delete * it;
+			it = generators.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	Logger::outputDebugString("A4");
+}
+
 void SynthVoice::linkElements(int idFrom, int idTo)
 {
 	CuttleFish::CuttleElement *from = getCuttleElement(idFrom);

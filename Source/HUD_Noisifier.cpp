@@ -48,6 +48,12 @@ void CuttleFish::HUD_Noisifier::setControlBounds()
 	amountLabel.setBounds(transform.getX() + 40, transform.getY() + 35, 120, 15);
 }
 
+void CuttleFish::HUD_Noisifier::removeControlsFromEditor()
+{
+	editor->removeChildComponent(&amountSlider);
+	editor->removeChildComponent(&amountLabel);
+}
+
 void CuttleFish::HUD_Noisifier::makeControlsVisibleInEditor()
 {
 	editor->addAndMakeVisible(&amountSlider);

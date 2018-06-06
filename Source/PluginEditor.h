@@ -27,6 +27,7 @@ public:
 
 	void setConnectionInput(int id);
 	void setConnectionOutput(int id);
+	void removeCuttleElement(int id);
 
 	void log(juce::String s);
 

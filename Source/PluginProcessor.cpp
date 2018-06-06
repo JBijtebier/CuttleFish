@@ -378,6 +378,43 @@ void CuttleFishAudioProcessor::addCuttleElement(string elementName, AudioProcess
 	currentElementId++;
 }
 
+void CuttleFishAudioProcessor::removeCuttleElement(int id, AudioProcessorEditor * editor)
+{
+	// --------------------
+	// Remove Cuttle elements from HUD elements
+	// --------------------
+	int i = 0;
+
+	for (std::vector<CuttleFish::HUDElement*>::iterator it = hudElements.begin(); it != hudElements.end(); it++) {
+		if ((*it)->getId() == id) {
+			(*it)->clearCuttleElements();
+			break;
+		}
+
+		i++;
+	}
+
+	// --------------------
+	// Remove Cuttle element
+	// --------------------
+	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {
+
+		// Single = on purpose! Just a check to see if we can actually assign the voice to the correct type
+		if (cuttleVoice = dynamic_cast<SynthVoice*>(cuttleSynth.getVoice(i))) {
+			// Add the element to the voice
+			cuttleVoice->removeCuttleElement(id);
+		}
+	}
+
+	// --------------------
+	// Remove HUD element
+	// --------------------
+	hudElements[i]->removeFromEditor();
+	delete hudElements[i];
+	hudElements.erase(hudElements.begin() + i, hudElements.begin() + i + 1);
+
+}
+
 void CuttleFishAudioProcessor::linkElements(int idFrom, int idTo)
 {
 	for (int i = 0; i < cuttleSynth.getNumVoices(); i++) {

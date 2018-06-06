@@ -48,6 +48,12 @@ void CuttleFish::HUD_HighPassFilter::setControlBounds()
 	cutoffLabel.setBounds(transform.getX() + 40, transform.getY() + 35, 120, 15);
 }
 
+void CuttleFish::HUD_HighPassFilter::removeControlsFromEditor()
+{
+	editor->removeChildComponent(&cutoffSlider);
+	editor->removeChildComponent(&cutoffLabel);
+}
+
 void CuttleFish::HUD_HighPassFilter::makeControlsVisibleInEditor()
 {
 	editor->addAndMakeVisible(&cutoffSlider);

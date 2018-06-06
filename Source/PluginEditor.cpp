@@ -211,6 +211,14 @@ void CuttleFishAudioProcessorEditor::setConnectionOutput(int id)
 	connectionOutputId = id;
 }
 
+void CuttleFishAudioProcessorEditor::removeCuttleElement(int id)
+{
+	processor.removeCuttleElement(id, this);
+
+	// Repaint
+	this->repaint();
+}
+
 void CuttleFishAudioProcessorEditor::log(juce::String s)
 {
 	logLabel.setText(s, juce::NotificationType::dontSendNotification);

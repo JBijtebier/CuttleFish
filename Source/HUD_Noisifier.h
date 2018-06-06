@@ -22,6 +22,7 @@ namespace CuttleFish {
 
 		void instantiateControls() override;
 		void setControlBounds() override;
+		void removeControlsFromEditor() override;
 		void makeControlsVisibleInEditor() override;
 
 		double getAmount();

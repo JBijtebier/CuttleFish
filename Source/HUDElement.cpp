@@ -49,6 +49,13 @@ void HUDElement::addCuttleElement(CuttleElement * elem)
 	cuttleElements.push_back(elem);
 }
 
+void CuttleFish::HUDElement::clearCuttleElements()
+{
+	for (auto it = cuttleElements.begin(); it != cuttleElements.end(); it++) {
+		(*it) = nullptr;
+	}
+}
+
 void CuttleFish::HUDElement::makeVisibleInEditor()
 {
 	makeFrameVisibleInEditor();
@@ -71,12 +78,29 @@ void CuttleFish::HUDElement::makeFrameVisibleInEditor()
 	editor->addAndMakeVisible(&frame);
 	editor->addAndMakeVisible(&title);
 	editor->addAndMakeVisible(&moveButton);
+	editor->addAndMakeVisible(&removeButton);
 	editor->addAndMakeVisible(&bottom);
 	editor->addAndMakeVisible(&outputButton);
 
 	if (isEffect) {
 		editor->addAndMakeVisible(&inputButton);
 	}
+}
+
+void CuttleFish::HUDElement::removeFromEditor()
+{
+	removeFrameFromEditor();
+	removeControlsFromEditor();
+}
+
+void CuttleFish::HUDElement::removeFrameFromEditor()
+{
+	editor->removeChildComponent(&frame);
+	editor->removeChildComponent(&title);
+	editor->removeChildComponent(&moveButton);
+	editor->removeChildComponent(&removeButton);
+	editor->removeChildComponent(&bottom);
+	editor->removeChildComponent(&outputButton);
 }
 
 void CuttleFish::HUDElement::setBounds()
@@ -107,6 +131,9 @@ void CuttleFish::HUDElement::setFrameBounds()
 	// Move Button
 	moveButton.setBounds(transform.getX(), transform.getY(), 30, 30);
 
+	// Move Button
+	removeButton.setBounds(transform.getX() + transform.getWidth() - 30, transform.getY(), 30, 30);
+
 	// Bottom
 	bottom.setBounds(transform.getX(), transform.getY() + transform.getHeight() - 40, transform.getWidth(), 40);
 
@@ -127,7 +154,11 @@ void CuttleFish::HUDElement::buttonClicked(Button * btn)
 	}
 
 	if (btn->getName() == "OutputButton") {
-		editor->setConnectionOutput(cuttleElements[1]->id);
+		editor->setConnectionOutput(cuttleElements[0]->id);
+	}
+
+	if (btn->getName() == "RemoveButton") {
+		editor->removeCuttleElement(cuttleElements[0]->id);
 	}
 }
 
@@ -155,6 +186,11 @@ void CuttleFish::HUDElement::setEditor(CuttleFishAudioProcessorEditor * e)
 	editor = e;
 }
 
+int CuttleFish::HUDElement::getId()
+{
+	return cuttleElements[0]->id;
+}
+
 Line<float> CuttleFish::HUDElement::getOutgoingLine()
 {
 	return cuttleElements[0]->getOutgoingLine();
@@ -162,6 +198,10 @@ Line<float> CuttleFish::HUDElement::getOutgoingLine()
 
 bool CuttleFish::HUDElement::hasOutgoingLine()
 {
+	if (cuttleElements[0] == nullptr) {
+		return false;
+	}
+
 	return cuttleElements[0]->hasOutgoingLine();
 }
 
@@ -255,13 +295,21 @@ void CuttleFish::HUDElement::instantiateFrame()
 	moveButton.addMouseListener(this, false);
 
 	// --------------
+	// Close Button
+	// --------------
+	removeButton.setColour(TextButton::ColourIds::textColourOffId, Colour(200, 30, 30));
+	removeButton.setColour(TextButton::ColourIds::buttonColourId, Colour(29, 33, 37));
+	removeButton.setButtonText("X");
+	removeButton.setName("RemoveButton");
+	removeButton.addListener(this);
+
+	// --------------
 	// Bottom
 	// --------------
 	// generator color
 	bottom.setColour(Label::ColourIds::backgroundColourId, Colour(60, 60, 60));
 	bottom.setColour(Label::ColourIds::outlineColourId, Colour(29, 33, 37));
 	bottom.setText("", juce::NotificationType::dontSendNotification);
-
 
 	// --------------
 	// Input Button

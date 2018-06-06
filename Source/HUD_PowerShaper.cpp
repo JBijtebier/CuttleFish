@@ -48,6 +48,12 @@ void CuttleFish::HUD_PowerShaper::setControlBounds()
 	powerLabel.setBounds(transform.getX() + 40, transform.getY() + 35, 120, 15);
 }
 
+void CuttleFish::HUD_PowerShaper::removeControlsFromEditor()
+{
+	editor->removeChildComponent(&powerSlider);
+	editor->removeChildComponent(&powerLabel);
+}
+
 void CuttleFish::HUD_PowerShaper::makeControlsVisibleInEditor()
 {
 	editor->addAndMakeVisible(&powerSlider);

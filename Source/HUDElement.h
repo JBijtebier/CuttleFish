@@ -30,10 +30,17 @@ namespace CuttleFish {
 
 		void addCuttleElement(CuttleElement *elem);
 
+		void clearCuttleElements();
+
 		// Drawing
 		void makeVisibleInEditor();
 		void makeFrameVisibleInEditor();
 		virtual void makeControlsVisibleInEditor() = 0;
+
+		// Removing
+		void removeFromEditor();
+		void removeFrameFromEditor();
+		virtual void removeControlsFromEditor() = 0;
 
 		// Instantiation
 		void instantiateUI();
@@ -53,6 +60,7 @@ namespace CuttleFish {
 		void mouseDown(const MouseEvent &event) override;
 
 		void setEditor(CuttleFishAudioProcessorEditor *e);
+		int getId();
 
 		Line<float> getOutgoingLine();
 		bool hasOutgoingLine();
@@ -74,6 +82,7 @@ namespace CuttleFish {
 		TextButton moveButton;
 		TextButton inputButton;
 		TextButton outputButton;
+		TextButton removeButton;
 	};
 
 }
