@@ -3,7 +3,7 @@
 
 	CuttleElement.h
 	Created: 17 Apr 2018 10:44:45pm
-	Author:  Phalcon
+	Author:  Jens Bijtebier
 
   ==============================================================================
 */

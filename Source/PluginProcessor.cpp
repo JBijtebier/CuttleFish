@@ -10,6 +10,7 @@
 #include "PluginEditor.h"
 #include "HUD_Oscillator.h"
 #include "HUD_LowPassFilter.h"
+#include "HUD_HighPassFilter.h"
 
 //==============================================================================
 CuttleFishAudioProcessor::CuttleFishAudioProcessor()
@@ -276,6 +277,10 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 		return new CuttleFish::LowPassFilter(id);
 	}
 
+	if (elementName == "High Pass Filter") {
+		return new CuttleFish::HighPassFilter(id);
+	}
+
 	Logger::outputDebugString("Could not create cuttle element because name was not found: " + juce::String(elementName));
 	return nullptr;
 }
@@ -293,6 +298,13 @@ CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string eleme
 
 	if (elementName == "Low Pass Filter") {
 		CuttleFish::HUD_LowPassFilter* elem = new CuttleFish::HUD_LowPassFilter();
+		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
+		return elem;
+	}
+
+	if (elementName == "High Pass Filter") {
+		CuttleFish::HUD_HighPassFilter* elem = new CuttleFish::HUD_HighPassFilter();
 		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
 		elem->setPosition(pos);
 		return elem;

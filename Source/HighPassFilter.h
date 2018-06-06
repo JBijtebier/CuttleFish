@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    LowPassFilter.h
-    Created: 21 May 2018 9:58:00pm
+    HighPassFilter.h
+    Created: 6 Jun 2018 4:47:21pm
     Author:  Jens Bijtebier
 
   ==============================================================================
@@ -15,10 +15,10 @@
 
 namespace CuttleFish {
 
-	class LowPassFilter : public Effect {
+	class HighPassFilter : public Effect {
 	public:
-		LowPassFilter(int elementId);
-		~LowPassFilter();
+		HighPassFilter(int elementId);
+		~HighPassFilter();
 
 		juce::String getName() override;
 

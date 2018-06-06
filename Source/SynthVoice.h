@@ -15,6 +15,7 @@
 #include "Output.h"
 #include "Oscillator.h"
 #include "LowPassFilter.h"
+#include "HighPassFilter.h"
 #include <vector>
 
 class SynthVoice : public SynthesiserVoice {

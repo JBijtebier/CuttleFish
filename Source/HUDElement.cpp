@@ -3,7 +3,7 @@
 
     HUDElement.cpp
     Created: 1 Jun 2018 6:57:01pm
-    Author:  Phalcon
+    Author:  Jens Bijtebier
 
   ==============================================================================
 */

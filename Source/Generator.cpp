@@ -3,8 +3,8 @@
 
     Generator.cpp
     Created: 18 Apr 2018 12:57:56pm
-    Author:  Phalcon
-
+    Author:  Jens Bijtebier
+    
   ==============================================================================
 */
 

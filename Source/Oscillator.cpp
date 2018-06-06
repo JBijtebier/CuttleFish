@@ -3,7 +3,7 @@
 
     Oscillator.cpp
     Created: 19 Apr 2018 12:08:17am
-    Author:  Phalcon
+    Author:  Jens Bijtebier
 
   ==============================================================================
 */

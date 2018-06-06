@@ -3,7 +3,7 @@
 
     Effect.h
     Created: 21 May 2018 9:56:12pm
-    Author:  Phalcon
+    Author:  Jens Bijtebier
 
   ==============================================================================
 */

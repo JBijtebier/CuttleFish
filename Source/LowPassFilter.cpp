@@ -3,7 +3,7 @@
 
     LowPassFilter.cpp
     Created: 21 May 2018 9:58:00pm
-    Author:  Phalcon
+    Author:  Jens Bijtebier
 
   ==============================================================================
 */

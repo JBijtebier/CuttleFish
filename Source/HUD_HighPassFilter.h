@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    HUD_LowPassHilter.h
-    Created: 2 Jun 2018 8:41:01pm
+    HUD_HighPassFilter.h
+    Created: 6 Jun 2018 4:47:29pm
     Author:  Jens Bijtebier
 
   ==============================================================================
@@ -15,10 +15,10 @@
 
 namespace CuttleFish {
 
-	class HUD_LowPassFilter : public HUDElement {
+	class HUD_HighPassFilter : public HUDElement {
 	public:
-		HUD_LowPassFilter();
-		~HUD_LowPassFilter();
+		HUD_HighPassFilter();
+		~HUD_HighPassFilter();
 
 		void instantiateControls() override;
 		void setControlBounds() override;

@@ -3,7 +3,7 @@
 
     HUD_Oscillator.cpp
     Created: 1 Jun 2018 7:12:18pm
-    Author:  Phalcon
+    Author:  Jens Bijtebier
 
   ==============================================================================
 */

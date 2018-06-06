@@ -30,7 +30,7 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	addMasterVolumeSlider();
 	masterVolumeAttachment = new AudioProcessorValueTreeState::SliderAttachment(processor.valueTreeState, "masterVolume", masterVolumeSlider);
 
-	// çonnection id's
+	// Ã§onnection id's
 	connectionInputId = -1;
 	connectionOutputId = -1;
 
@@ -47,7 +47,7 @@ CuttleFishAudioProcessorEditor::CuttleFishAudioProcessorEditor (CuttleFishAudioP
 	logLabel.setText("Log", juce::NotificationType::dontSendNotification);
 	logLabel.setBounds(0, getHeight() - 32, getWidth(), 32);
 	// UNCOMMENT TO ENABLE THE LIVE LOG
-	addAndMakeVisible(logLabel);
+	// addAndMakeVisible(logLabel);
 }
 
 CuttleFishAudioProcessorEditor::~CuttleFishAudioProcessorEditor()
@@ -106,11 +106,17 @@ void CuttleFishAudioProcessorEditor::addElementBox()
 	elementBox.setColour(ComboBox::ColourIds::backgroundColourId, Colour(29, 33, 37));
 	elementBox.setColour(ComboBox::ColourIds::textColourId, Colour(230, 230, 230));
 	elementBox.setColour(ComboBox::ColourIds::buttonColourId, Colour(29, 33, 37));
+
+	// Element Sections
+	// Generators
 	elementBox.addSectionHeading("Generators");
 	elementBox.addItem("Oscillator", 1);
 	elementBox.addSeparator();
+
+	// Effects
 	elementBox.addSectionHeading("Effects");
 	elementBox.addItem("Low Pass Filter", 2);
+	elementBox.addItem("High Pass Filter", 3);
 	elementBox.setSelectedId(1);
 	addAndMakeVisible(&elementBox);
 
