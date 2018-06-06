@@ -25,9 +25,19 @@ void Effect::setSupplier(CuttleElement *newSupplier) {
 	supplier = newSupplier;
 }
 
+CuttleElement * CuttleFish::Effect::getSupplier()
+{
+	return supplier;
+}
+
 void CuttleFish::Effect::setSuccessor(CuttleElement * newSuccessor)
 {
 	successor = newSuccessor;
+}
+
+CuttleElement * CuttleFish::Effect::getSuccessor()
+{
+	return successor;
 }
 
 bool Effect::hasSupplier()

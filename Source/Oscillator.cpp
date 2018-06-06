@@ -37,6 +37,16 @@ void Oscillator::releaseNote() {
 	env.trigger = 0;
 }
 
+bool CuttleFish::Oscillator::isClear()
+{
+	if (env.trigger == 1) {
+		return false;
+	}
+	else {
+		return (env.amplitude <= 0.0001) && (env.releasephase == 1);
+	}
+}
+
 juce::String Oscillator::getName() {
 	return juce::String("Oscillator");
 }

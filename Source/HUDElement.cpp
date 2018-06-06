@@ -18,7 +18,6 @@ using namespace CuttleFish;
 
 HUDElement::HUDElement()
 {
-	setPosition(100, 100);
 }
 
 HUDElement::~HUDElement()

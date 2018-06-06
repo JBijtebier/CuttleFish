@@ -18,7 +18,9 @@ namespace CuttleFish {
 		Effect(int elementId);
 
 		void setSupplier(CuttleElement *newSupplier);
+		CuttleElement * getSupplier();
 		void setSuccessor(CuttleElement *newSuccessor);
+		CuttleElement * getSuccessor();
 		bool hasSupplier();
 		bool hasSuccessor();
 

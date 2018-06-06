@@ -25,7 +25,7 @@ namespace CuttleFish {
 		double getSignal() override;
 
 		void setSupplier(CuttleElement *newSupplier);
-
+		CuttleElement * getSupplier();
 		bool hasSupplier();
 
 		Line<float> getOutgoingLine() override;

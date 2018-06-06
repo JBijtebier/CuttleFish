@@ -61,15 +61,11 @@ class SynthVoice : public SynthesiserVoice {
 
 		bool cleared;
 
-		maxiOsc osc1;
-		maxiEnv env1;
-
 		/*
 			To be removed
 		*/
 
-		CuttleFish::Oscillator *osc;
-		CuttleFish::LowPassFilter *filter;
+		bool generatorsClear();
 
 		//==============================================================================
 		// CUTTLE ELEMENT - VOICES

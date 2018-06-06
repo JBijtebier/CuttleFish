@@ -35,9 +35,6 @@ void SynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound 
 	// Set cleared to false so know we have to clear the note after its release
 	cleared = false;
 
-	// Set the trigger to 1 so we know it's triggered
-	env1.trigger = 1;
-
 	// Set frequency of note
 	frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
 
@@ -51,9 +48,6 @@ void SynthVoice::startNote(int midiNoteNumber, float velocity, SynthesiserSound 
 
 void SynthVoice::stopNote(float velocity, bool allowTailoff)
 {
-	// Let the trigger know that we released the note
-	env1.trigger = 0;
-
 	for (int i = 0; i < generators.size(); i++) {
 		generators[i]->releaseNote();
 	}
@@ -76,12 +70,6 @@ void SynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSamp
 	// Clear the current note if the velocity is 0. (see stopNote)
 	if (level == 0) { clearCurrentNote(); }
 
-	// Envelope parameters
-	env1.setAttack(20);
-	env1.setDecay(500);
-	env1.setSustain(0.8);
-	env1.setRelease(2000);
-
 	// Iterate over samples
 	for (int sample = 0; sample < numSamples; sample++) {
 
@@ -95,7 +83,7 @@ void SynthVoice::renderNextBlock(AudioBuffer<float>& outputBuffer, int startSamp
 
 		// If our envelope amplitude is close enough to 0 (inaudible) and  we're in the release phase, our release has finished.
 		// That means we can clear the note.
-		if ((env1.amplitude <= 0.0001) && (env1.releasephase == 1) && !cleared) {
+		if (generatorsClear() && !cleared) {
 			clearCurrentNote();
 			cleared = true;
 		}
@@ -156,6 +144,64 @@ void SynthVoice::linkElements(int idFrom, int idTo)
 	CuttleFish::CuttleElement *from = getCuttleElement(idFrom);
 	CuttleFish::CuttleElement *to = getCuttleElement(idTo);
 
+	// --------------------
+	// Remove FROM's Successor's supplier
+	// --------------------
+	// OLD LINK: GEN -> ...
+	if (CuttleFish::Generator *oldG = dynamic_cast<CuttleFish::Generator*>(from)) {
+		// OLD LINK: GEN -> EFFECT
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(oldG->getSuccessor())) {
+			e->setSupplier(nullptr);
+		}
+		// OLD LINK: GEN -> OUTPUT
+		if (CuttleFish::Output *o = dynamic_cast<CuttleFish::Output*>(oldG->getSuccessor())) {
+			o->setSupplier(nullptr);
+		}
+	}
+
+	// OLD LINK: EFFECT -> ...
+	if (CuttleFish::Effect *oldE = dynamic_cast<CuttleFish::Effect*>(from)) {
+		// OLD LINK: EFFECT -> EFFECT
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(oldE->getSuccessor())) {
+			e->setSupplier(nullptr);
+		}
+		// OLD LINK: EFFECT -> OUTPUT
+		if (CuttleFish::Output *o = dynamic_cast<CuttleFish::Output*>(oldE->getSuccessor())) {
+			o->setSupplier(nullptr);
+		}
+	}
+
+	// --------------------
+	// Remove TO's Supplier's successor
+	// --------------------
+	// OLD LINK: OUTPUT <- ...
+	if (CuttleFish::Output *oldToO = dynamic_cast<CuttleFish::Output*>(to)) {
+		// OLD LINK: OUTPUT <- EFFECT
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(oldToO->getSupplier())) {
+			e->setSuccessor(nullptr);
+		}
+		// OLD LINK: OUTPUT <- GENERATOR
+		if (CuttleFish::Generator *g = dynamic_cast<CuttleFish::Generator*>(oldToO->getSupplier())) {
+			g->setSuccessor(nullptr);
+		}
+	}
+
+	// OLD LINK: EFFECT <- ...
+	if (CuttleFish::Effect *oldToE = dynamic_cast<CuttleFish::Effect*>(to)) {
+		// OLD LINK: EFFECT <- EFFECT
+		if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(oldToE->getSupplier())) {
+			e->setSuccessor(nullptr);
+		}
+		// OLD LINK: EFFECT <- GENERATOR
+		if (CuttleFish::Generator *g = dynamic_cast<CuttleFish::Generator*>(oldToE->getSupplier())) {
+			g->setSuccessor(nullptr);
+		}
+	}
+
+	// --------------------
+	// SET THE NEW LINKS
+	// --------------------
+
 	// To a generator
 	if (CuttleFish::Generator *generator = dynamic_cast<CuttleFish::Generator*>(to)) {
 		Logger::outputDebugString("Can't link TO a generator. Can only link FROM an output/generator/effect TO an output/effect.");
@@ -163,23 +209,24 @@ void SynthVoice::linkElements(int idFrom, int idTo)
 	}
 
 	// To an effect
-	if (CuttleFish::Effect *effect = dynamic_cast<CuttleFish::Effect*>(to)) {
-		effect->setSupplier(from);
+	if (CuttleFish::Effect *toEffect = dynamic_cast<CuttleFish::Effect*>(to)) {
+
+		toEffect->setSupplier(from);
 	}
 
 	// To an output
-	if (CuttleFish::Output *newOutput = dynamic_cast<CuttleFish::Output*>(to)) {
-		newOutput->setSupplier(from);
+	if (CuttleFish::Output *toOutput = dynamic_cast<CuttleFish::Output*>(to)) {
+		toOutput->setSupplier(from);
 	}
 
 	// From a generator
-	if (CuttleFish::Generator *g = dynamic_cast<CuttleFish::Generator*>(from)) {
-		g->setSuccessor(to);
+	if (CuttleFish::Generator *fromGenerator = dynamic_cast<CuttleFish::Generator*>(from)) {
+		fromGenerator->setSuccessor(to);
 	}
 
 	// From an effect
-	if (CuttleFish::Effect *e = dynamic_cast<CuttleFish::Effect*>(from)) {
-		e->setSuccessor(to);
+	if (CuttleFish::Effect *fromEffect = dynamic_cast<CuttleFish::Effect*>(from)) {
+		fromEffect->setSuccessor(to);
 	}
 
 	// From an output
@@ -187,6 +234,9 @@ void SynthVoice::linkElements(int idFrom, int idTo)
 		Logger::outputDebugString("Can't link FROM an output. Can only link FROM a generator/effect TO an output/effect.");
 		return;
 	}
+
+	clearCurrentNote();
+	cleared = true;
 }
 
 void SynthVoice::addGenerator(CuttleFish::Generator *generator)
@@ -224,4 +274,14 @@ CuttleFish::CuttleElement * SynthVoice::getCuttleElement(int id)
 
 	Logger::outputDebugString("getCuttleElement was not found for id: " + juce::String(id));
 	return nullptr;
+}
+
+bool SynthVoice::generatorsClear() {
+	for (int i = 0; i < generators.size(); i++) {
+		if (!generators[i]->isClear()) {
+			return false;
+		}
+	}
+
+	return true;
 }

@@ -282,15 +282,19 @@ CuttleFish::CuttleElement * CuttleFishAudioProcessor::createCuttleElement(string
 
 CuttleFish::HUDElement * CuttleFishAudioProcessor::createHUDElement(string elementName, AudioProcessorEditor *editor)
 {
+	Point<int> pos = Point<int>(65, 50);
+
 	if (elementName == "Oscillator") {
 		CuttleFish::HUD_Oscillator* elem = new CuttleFish::HUD_Oscillator();
 		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
 		return elem;
 	}
 
 	if (elementName == "Low Pass Filter") {
 		CuttleFish::HUD_LowPassFilter* elem = new CuttleFish::HUD_LowPassFilter();
 		elem->setEditor(dynamic_cast<CuttleFishAudioProcessorEditor*>(editor));
+		elem->setPosition(pos);
 		return elem;
 	}
 

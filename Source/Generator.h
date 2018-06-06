@@ -19,8 +19,10 @@ namespace CuttleFish {
 
 		virtual void startNote(double noteLevel, double noteFrequency) = 0;
 		virtual void releaseNote() = 0;
+		virtual bool isClear() = 0;
 
 		void setSuccessor(CuttleElement *newSuccessor);
+		CuttleElement * getSuccessor();
 		bool hasSuccessor();
 
 		Line<float> getOutgoingLine() override;

@@ -40,6 +40,11 @@ void Output::setSupplier(CuttleElement *newSupplier) {
     supplier = newSupplier;
 }
 
+CuttleElement * CuttleFish::Output::getSupplier()
+{
+	return supplier;
+}
+
 bool Output::hasSupplier()
 {
 	return (supplier != nullptr);

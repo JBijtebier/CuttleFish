@@ -23,6 +23,8 @@ namespace CuttleFish {
 
 		void releaseNote() override;
 
+		bool isClear() override;
+
 		juce::String getName() override;
 
 		double getSignal() override;

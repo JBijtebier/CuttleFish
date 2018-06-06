@@ -28,11 +28,11 @@ void CuttleFish::HUD_LowPassFilter::instantiateControls()
 	// -------------
 	// Params
 	cutoffSlider.setSliderStyle(Slider::RotaryVerticalDrag);
-	cutoffSlider.setRange(0.0, 1.0, 0.001);
+	cutoffSlider.setRange(0, 1, 0.001);
 	cutoffSlider.setTextBoxStyle(Slider::NoTextBox, false, 90, 0);
 	cutoffSlider.setPopupDisplayEnabled(true, true, editor);
-	cutoffSlider.setTextValueSuffix(" Cutoff");
-	cutoffSlider.setValue(0.0);
+	cutoffSlider.setTextValueSuffix(" Hz Cutoff");
+	cutoffSlider.setValue(1);
 	setSliderColours(&cutoffSlider);
 	// Label
 	cutoffLabel.setColour(Label::ColourIds::textColourId, Colour(38, 50, 56));

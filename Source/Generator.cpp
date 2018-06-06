@@ -25,6 +25,11 @@ void CuttleFish::Generator::setSuccessor(CuttleElement * newSuccessor)
 	successor = newSuccessor;
 }
 
+CuttleElement * CuttleFish::Generator::getSuccessor()
+{
+	return successor;
+}
+
 bool Generator::hasSuccessor()
 {
 	return (successor != nullptr);
