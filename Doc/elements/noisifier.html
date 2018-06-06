@@ -11,18 +11,18 @@
     <title>CuttleFish - Modular VST</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
     <!-- Plugin CSS -->
-    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="../vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/creative.css" rel="stylesheet">
+    <link href="../css/creative.css" rel="stylesheet">
 
   </head>
 
@@ -31,14 +31,14 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-shrink" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.html"><font color="#a8e7ff">Cuttle</font><font color="#abffb0">Fish</font></a>
+        <a class="navbar-brand js-scroll-trigger" href="../index.html"><font color="#a8e7ff">Cuttle</font><font color="#abffb0">Fish</font></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="elements.html">Elements</a>
+              <a class="nav-link js-scroll-trigger" href="../elements.html">Elements</a>
             </li>
           </ul>
         </div>
@@ -49,39 +49,43 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Elements</h2>
+            <h2 class="section-heading">Noisifier</h2>
             <hr class="my-4">
           </div>
         </div>
       </div>
       <div class="container elementList">
-        <h4>Generators</h4>
-        <a href="elements/noisegenerator.html">Noise Generator</a><br>
-        <a href="elements/oscillator.html">Oscillator</a><br>
-        <br>
-        <h4>Effects</h4>
-        <a href="elements/highpassfilter.html">High Pass Filter</a><br>
-        <a href="elements/lowpassfilter.html">Low Pass Filter</a><br>
-        <a href="elements/noisifier.html">Noisifier</a><br>
-        <a href="elements/powershaper.html">Power Shaper</a><br>
-        <br>
-        <h4>Controllers</h4>
-        LFO<br>
-        <br>
-        <h4>Routing</h4>
-        Split<br>
-        Join<br>
-        <br>
+        <h4>Inputs</h4>
+        <div class="elementSection">
+          <div class="AUDIOSignal">AUDIO: </div>
+          <div class="EXPLANATION">
+            This element takes input from a previous element that supplies an audio signal.
+          </div>
+        </div>
+        <h4>Outputs</h4>
+        <div class="elementSection">
+          <div class="AUDIOSignal">AUDIO: </div>
+          <div class="EXPLANATION">
+            The AUDIO output signal.
+          </div>
+        </div>
+        <h4>Parameters</h4>
+        <div class="elementSection">
+          <div class="PARAMETER">AMOUNT: </div>
+          <div class="EXPLANATION">
+            Strength of the effect. Dry/Wet knob.
+          </div>
+        </div>
       </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="../vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
   </body>
 
 </html>

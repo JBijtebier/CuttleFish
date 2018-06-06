@@ -49,7 +49,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Low Pass Filter</h2>
+            <h2 class="section-heading">Noise Generator</h2>
             <hr class="my-4">
           </div>
         </div>
@@ -57,9 +57,9 @@
       <div class="container elementList">
         <h4>Inputs</h4>
         <div class="elementSection">
-          <div class="AUDIOSignal">AUDIO: </div>
+          <div class="MIDISignal">MIDI: </div>
           <div class="EXPLANATION">
-            This element takes input from a previous element that supplies an audio signal.
+            This element takes direct input from incoming MIDI signals.
           </div>
         </div>
         <h4>Outputs</h4>
@@ -71,12 +71,24 @@
         </div>
         <h4>Parameters</h4>
         <div class="elementSection">
-          <div class="PARAMETER">CUTOFF: </div>
+          <div class="PARAMETER">A: </div>
           <div class="EXPLANATION">
-            Value between 0 and 1. Linearly increases the cutoff.<br>
-            0 = all frequencies cut off.<br>
-            ]0; 1[ = high frequencies cutoff. Fewer frequencies cut off with higher value.<br>
-            1 = no frequencies cut off.<br>
+            Attack of the <a href="https://www.wikiaudio.org/adsr-envelope/">ADSR envelope</a>.<br><br>
+          </div>
+
+          <div class="PARAMETER">D: </div>
+          <div class="EXPLANATION">
+            Delay of the <a href="https://www.wikiaudio.org/adsr-envelope/">ADSR envelope</a>.<br><br>
+          </div>
+
+          <div class="PARAMETER">S: </div>
+          <div class="EXPLANATION">
+            Sustain of the <a href="https://www.wikiaudio.org/adsr-envelope/">ADSR envelope</a>.<br><br>
+          </div>
+
+          <div class="PARAMETER">R: </div>
+          <div class="EXPLANATION">
+            Release of the <a href="https://www.wikiaudio.org/adsr-envelope/">ADSR envelope</a>.<br><br>
           </div>
         </div>
       </div>
