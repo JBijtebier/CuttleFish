@@ -1,0 +1,16 @@
+*.sln
+*.vcxproj
+*.vcxproj.*
+*.exp
+*.ilk
+*.lib
+*.pdb
+*.log
+*.obj
+*.res
+*.jucer
+*.rc
+JuceLibraryCode/
+Builds/*
+!Builds/VisualStudio2017/x64/Release/VST/CuttleFish.dll
+!Builds/VisualStudio2017/x64/ReleaseDebug/VST/CuttleFish.dll
